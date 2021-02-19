@@ -1,17 +1,22 @@
 package com.abit.base.domain;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(schema="base", name = "usuarios")
 public class Usuarios {
 
     private Integer personaId;
     private String alias;
-    private String nombreUsuario;
+    private String cuenta;
     private String clave;
 
-    public Usuarios(Integer personaId, String alias, String nombreUsuario, String clave) {
+    public Usuarios(Integer personaId, String alias, String cuenta, String clave) {
         this.personaId = personaId;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.nombreUsuario = nombreUsuario;
+        this.alias = alias;
+        this.cuenta = cuenta;
         this.clave = clave;
     }
 
@@ -31,12 +36,12 @@ public class Usuarios {
         this.alias = alias;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getCuenta() {
+        return cuenta;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setCuenta(String cuenta) {
+        this.cuenta = cuenta;
     }
 
     public String getClave() {
