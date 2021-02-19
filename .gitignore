@@ -1,0 +1,42 @@
+HELP.md
+target/
+!/apiFile/.mvn/wrapper/maven-wrapper.jar
+!/apiFile/**/src/main/**
+!/apiFile/**/src/test/**
+
+### STS ###
+/apiFile/.apt_generated
+/apiFile/.classpath
+/apiFile/.factorypath
+/apiFile/.project
+/apiFile/.settings
+/apiFile/.springBeans
+/apiFile/.sts4-cache
+
+### IntelliJ IDEA ###
+/apiFile/.idea
+/apiFile/*.iws
+/apiFile/*.iml
+/apiFile/*.ipr
+
+### NetBeans ###
+/apiFile/nbproject/private/
+/apiFile/nbbuild/
+/apiFile/dist/
+/apiFile/nbdist/
+/apiFile/.nb-gradle/
+/apiFile/build/
+
+### VS Code ###
+/apiFile/.vscode/
+
+
+/frontFile/node_modules/*
+/frontFile/sw.*
+/frontFile/.nuxt/*
+/frontFile/.nuxt
+/frontFile/dist/*
+/frontFile/dist
+/frontFile/.git/*
+/frontFile/.git
+/frontFile/package-lock.json

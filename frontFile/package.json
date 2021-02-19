@@ -1,0 +1,30 @@
+{
+  "name": "covid19",
+  "version": "1.0.0",
+  "description": "Sistema de registro de personal con COVID 19",
+  "author": "rpmamani@ypfb.gob.bo",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/auth-next": "5.0.0-1607693598.34d83ea",
+    "@nuxtjs/axios": "^5.12.3",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "core-js": "^3.7.0",
+    "echarts": "^4.9.0",
+    "mapbox-gl": "^1.12.0",
+    "nuxt": "^2.14.11",
+    "vue-echarts": "^5.0.0-beta.0",
+    "vue-fullscreen": "^2.1.6",
+    "vue-mapbox": "^0.4.1"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.11.2",
+    "sass-loader": "^7.1.0"
+  }
+}
