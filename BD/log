@@ -63,6 +63,7 @@ CREATE TABLE
 CREATE TABLE
 CREATE TABLE
 CREATE TABLE
+CREATE TABLE
 COMMIT
 BEGIN
 CREATE FUNCTION
@@ -99,13 +100,13 @@ BEGIN
  setval 
 --------
       1
-(1 row)
+(1 fila)
 
 INSERT 0 1
  setval 
 --------
       1
-(1 row)
+(1 fila)
 
 INSERT 0 1
 INSERT 0 1
@@ -115,40 +116,45 @@ INSERT 0 3
  setval 
 --------
       1
-(1 row)
+(1 fila)
 
 INSERT 0 8
 INSERT 0 2
  setval 
 --------
       1
-(1 row)
+(1 fila)
 
 INSERT 0 2
  setval 
 --------
       1
-(1 row)
+(1 fila)
 
 INSERT 0 1
  setval 
 --------
       1
-(1 row)
+(1 fila)
 
 INSERT 0 1
  setval 
 --------
       1
-(1 row)
+(1 fila)
 
 INSERT 0 1
  setval 
 --------
       1
-(1 row)
+(1 fila)
 
 INSERT 0 1
+COMMIT
+BEGIN
+INSERT 0 3
+INSERT 0 5
+INSERT 0 10
 COMMIT
 BEGIN
 ALTER TABLE
@@ -169,14 +175,22 @@ ALTER TABLE
 ALTER TABLE
 COMMIT
 BEGIN
-ROLLBACK
+COMMIT
 BEGIN
 ROLLBACK
 BEGIN
-ROLLBACK
+GRANT
+GRANT
+COMMIT
+BEGIN
+GRANT
+COMMIT
 BEGIN
 CREATE TRIGGER
 CREATE TRIGGER
 COMMIT
 BEGIN
-ROLLBACK
+GRANT
+GRANT
+GRANT
+COMMIT

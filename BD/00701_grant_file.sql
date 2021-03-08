@@ -4,7 +4,9 @@
 
 /*****ASISTENCIA*****/
 begin;
- grant execute on function files.auth(text, text) to publico;
+   grant select ON files.categoria_servicios to publico;
+   grant select ON files.servicios to publico;
+   grant select ON files.requisitos_servicios to publico;
  --grant execute on type base.jwt to files;
   --grant execute on type base.jwt to publico;
  --GRANT SELECT ON nucleo.vw_usuario TO publico;

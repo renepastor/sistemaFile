@@ -4,7 +4,7 @@
             :clipped-left="clipped"
             fixed
             app
-            color="red darken-4 "
+            color=""
             class="white--text"
             dense
             lighten>
@@ -52,7 +52,7 @@
 
         <v-main>
             <comp-loading :loading="loading">
-                <nuxt />
+                <nuxt/>
             </comp-loading>
         </v-main>
     </v-app>
@@ -114,5 +114,17 @@ a, .v-list-item__title{
 }
 body{
     background-color: #e6e6e6 !important;
+}
+.v-application {
+    background-color: rgb(4, 167, 226) !important;
+}
+header, nav{
+    background-color:#011aa0 !important;
+}
+header .v-icon{
+    color: #e6e6e6 !important;
+}
+.v-btn-pry{
+    background-color:#011aa0 !important;
 }
 </style>

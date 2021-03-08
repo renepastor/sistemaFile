@@ -2,9 +2,9 @@
     <v-container fluid>
       <comp-loading :loading="loading">
         <v-row no-gutters>
-            <v-col cols sm="12" md="2" lg="4">
+            <v-col cols sm="12" md="2" lg="3">
             </v-col>
-            <v-col cols sm="12" md="8" lg="4">
+            <v-col cols sm="12" md="8" lg="6">
                 <br><br>
                 <v-card class="pa-2" outlined tile elevation="12">
                     <v-form @submit.prevent="submit" ref="form" v-model="valid" lazy-validation>
@@ -42,10 +42,10 @@
                                   <nuxt-link 
                                       to="/registrarse">
                                       <v-btn outlined>
-                                          Registrese
-                                          <v-icon right>
+                                          <v-icon left>
                                             mdi-smart-card
                                           </v-icon>
+                                          Registrese
                                       </v-btn>
                                     </nuxt-link>
                               </v-col>

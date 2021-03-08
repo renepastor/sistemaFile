@@ -40,9 +40,23 @@ CREATE TABLE base.personas (
     editado dfechahora
 );
 
+CREATE TABLE files.categoria_servicios (
+    id bigserial primary key,
+    nombre dtexto,
+    logo dtexto,
+    fecha_inicio dfecha,
+    fecha_vigencia dfecha,
+    estado destado,
+    usuario duser,
+    editado dfechahora
+);
+
 CREATE TABLE files.servicios (
     id bigserial primary key,
-    promocion dtexto,
+    categoria_id dllave,
+    servicio dtexto,
+    promocion dbool,
+    descripcion dtexto,
     fecha_inicio dfecha,
     fecha_vigencia dfecha,
     estado destado,

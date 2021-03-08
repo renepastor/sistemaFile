@@ -1,14 +1,10 @@
 ************ INICIO *******
     ******* Tablas ....
-ERROR:  schema "base" does not exist
-ERROR:  schema "files" does not exist
+ERROR:  no existe el esquema «base»
+ERROR:  no existe el esquema «files»
     ******* Funciones....
     ******* Datos....
     ******* Referencias....
     ******* Grant....
-ERROR:  role "visita" already exists
-ERROR:  role "publico" does not exist
-ERROR:  current transaction is aborted, commands ignored until end of transaction block
-ERROR:  role "publico" does not exist
-ERROR:  role "publico" does not exist
+ERROR:  el rol «visita» ya existe
 ************ FIN ************

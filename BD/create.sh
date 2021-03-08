@@ -21,11 +21,11 @@ psql $name_bd < 00301_fn_file.sql 2>> error >> log
 
 echo '    ******* Datos....' >> error
 psql $name_bd < 00400_data.sql 2>> error >> log
-##psql $name_bd < 00401_data_file.sql 2>> error >> log
+psql $name_bd < 00401_data_file.sql 2>> error >> log
 
 echo '    ******* Referencias....' >> error
 psql $name_bd < 00500_ref.sql 2>> error >> log
-##psql $name_bd < 00501_ref_file.sql 2>> error >> log
+psql $name_bd < 00501_ref_file.sql 2>> error >> log
 
 echo '    ******* Grant....' >> error
 psql $name_bd < 00700_grant.sql 2>> error >> log
