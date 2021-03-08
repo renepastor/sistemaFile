@@ -1,34 +1,9 @@
 HELP.md
-target/
-!/apiFile/.mvn/wrapper/maven-wrapper.jar
-!/apiFile/**/src/main/**
-!/apiFile/**/src/test/**
-
 ### STS ###
-/apiFile/.apt_generated
-/apiFile/.classpath
-/apiFile/.factorypath
-/apiFile/.project
-/apiFile/.settings
-/apiFile/.springBeans
-/apiFile/.sts4-cache
-
-### IntelliJ IDEA ###
-/apiFile/.idea
-/apiFile/*.iws
-/apiFile/*.iml
-/apiFile/*.ipr
-
-### NetBeans ###
-/apiFile/nbproject/private/
-/apiFile/nbbuild/
-/apiFile/dist/
-/apiFile/nbdist/
-/apiFile/.nb-gradle/
-/apiFile/build/
+/apiFileNode/node_modules/*
 
 ### VS Code ###
-/apiFile/.vscode/
+/apiFileNode/.vscode/
 
 
 /frontFile/node_modules/*
