@@ -1,4 +1,4 @@
-export default function auth({$auth, redirect, store}) {
+/*export default function auth({$auth, redirect, store}) {
   console.log("###---$$$$$$---##");
   const user = $auth.user
   if (user && user.roles.includes('ROLE_ADMIN')) {
@@ -9,7 +9,7 @@ export default function auth({$auth, redirect, store}) {
   }
   return;
 }
-/*
+
 export default async function ({ $auth, route, redirect, store }) {
   console.log("############",JSON.stringify($auth))
   if (!$auth.loggedIn) {

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 postgraphile \
-  --connection postgres://localhost:5432/bdypfb_covid \
-  --schema nucleo \
+  --connection postgres://localhost:5432/bdfile \
+  --schema files \
   --host localhost \
   --port 8005 \
   --enhance-graphiql \

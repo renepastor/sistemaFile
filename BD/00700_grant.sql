@@ -7,20 +7,20 @@ commit;
 
 
 begin;
-grant usage on schema nucleo to publico;
-
+grant usage on schema base to publico;
+grant usage on schema files to publico;
 commit;
 
 begin;
-grant execute on function nucleo.auth(text, text) to publico;
---- GRANT EXECUTE ON FUNCTION nucleo.fn_postulante(text, text) TO publico;
---- GRANT EXECUTE ON FUNCTION nucleo.mis_preguntas(dllave) TO publico;
+grant execute on function files.auth(text, text) to publico;
+--- GRANT EXECUTE ON FUNCTION base.fn_postulante(text, text) TO publico;
+--- GRANT EXECUTE ON FUNCTION base.mis_preguntas(dllave) TO publico;
 
 commit;
 
 
 
 begin;
-  create trigger aud_user before insert on nucleo.usuarios for each row execute procedure nucleo.aud_user();
-  create trigger aud_user before insert on nucleo.usr_roles for each row execute procedure nucleo.aud_user();
+  create trigger aud_user before insert on base.usuarios for each row execute procedure base.aud_user();
+  create trigger aud_user before insert on base.usr_roles for each row execute procedure base.aud_user();
 commit;

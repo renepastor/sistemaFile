@@ -1,8 +1,8 @@
 {
-  "name": "covid19",
+  "name": "control_doc",
   "version": "1.0.0",
-  "description": "Sistema de registro de personal con COVID 19",
-  "author": "rpmamani@ypfb.gob.bo",
+  "description": "Contratos & Documentos Postpago",
+  "author": "adalid@gmail.com",
   "private": true,
   "scripts": {
     "dev": "nuxt",

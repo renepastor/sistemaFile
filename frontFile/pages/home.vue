@@ -15,7 +15,7 @@
       </div>
       <v-card>
         <v-card-title class="headline">
-          Bienvenidos a sistema de reportes covid de YPFB
+          Bienvenidos a Contratos & Documentos Postpago
         </v-card-title>
         <v-card-actions>
           <v-spacer />

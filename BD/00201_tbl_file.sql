@@ -2,9 +2,24 @@
   fec: 19/06/2017
 */
 begin;
+drop schema files CASCADE;
+commit;
+
+begin;
+create schema files;
+commit;
+
+
+begin;
 
 /******DOCUMENTOS PERSONALES*******/
 
+
+create type files.jwt as (
+  role dtexto,
+  pers_id dllave,
+  cuenta dtexto
+);
 
 
 CREATE TABLE base.personas (

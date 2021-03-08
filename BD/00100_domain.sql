@@ -4,6 +4,7 @@
 
 begin;
 drop schema base CASCADE;
+--drop schema files CASCADE;
 commit;
 
 begin;

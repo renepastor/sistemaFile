@@ -1,18 +1,14 @@
 import colors from 'vuetify/es5/util/colors'
-const query = {"query": `query{miUsuario{mail:cuenta persId fullName:alias}
-                                roleById(id: "1011100000000011") {
-                                  menuesByRolId {nodes {
-                                    enlaceByEnlaId {nombre nivel ruta imagen
-                                      enlacesByPadreId(condition: {nivel: 2} orderBy: ORDEN_ASC) {nodes {
-                                        menuesByEnlaId(condition: {rolId: "1011100000000011"}) {
-                                          nodes {enlaceByEnlaId {nombre nivel ruta imagen
-                                  }}}}}}}}}
-                                }`};
+const query = {"query": `query{
+  miUsuario{persId usuario cuenta alias}
+  miMenu{nodes{id nombre ruta imagen nivel orden padreId}}}`};
 
 export default {
   /*
   ** Headers of the page
   */
+  mode: 'universal',
+  ssr: false,
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
@@ -34,7 +30,8 @@ export default {
     ]
   },
   router: {
-    middleware: ['auth']
+    middleware: ['auth'],
+    prefetchLinks: false
   },
   /*
   ** Customize the progress-bar color
@@ -63,7 +60,7 @@ export default {
   ],
   server: {
     port: 8080, // default: 3000
-    //host: '45.79.7.33' // default: localhost
+    //host: '172.16.0.148' // default: localhost
   },
   /*
   ** Nuxt.js dev-modules
@@ -86,20 +83,20 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL :process.env.COVID_URL
+    baseURL :process.env.URL_GRAPH
   },
   auth: {
      strategies: {
       local: {
         token: {
-            property: 'data.jwt',
+            property: 'data.auth.jwt',
         },
         user: {
           property: 'data',
           autoFetch: true
         },
         endpoints: {
-            login:{url: '/src/login',method: 'post',propertyName: 'data.jwt'},
+            login:{url: '/graphql', method: 'post',propertyName: 'data.auth.jwt'},
             logout: false,
             user:{ url: '/graphql', method: 'post', data:query, propertyName: 'data' }
         },
@@ -126,8 +123,6 @@ export default {
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3
-        },
-        ypfb: {
         }
       }
     }
@@ -135,30 +130,36 @@ export default {
   pwa: {
     meta: {
       lang:'es'
-    },
-    manifest: {
-      lang: 'es',
+    }
+  },
+  manifest: {
+      lang: 'es-BO',
       name: process.env.npm_package_name || '',
       short_name: process.env.npm_package_name || '',
       description:process.env.npm_package_description || '',
-      background_color:'red',
-      theme_color:'red',
+      background_color:'#b71c1c',
+      theme_color:'#b71c1c',
       useWebmanifestExtension: false,
-      start_url:'../home'
-    },
-    icon: {
-      source: '~/assets/ypfbApp.png',
-      fileName: 'ypfbApp.png',
-    }, // disables the icon module
-    workbox: {
-      workboxVersion: process.env.VERSION,
-      offline:true,
-      runtimeCaching: [
-        {
-          urlPattern: 'https://testmovil.ypfb.gob.bo/.*',
-        }
-      ]
-    }
+      start_url:'../home',
+      display: 'standalone',
+      orientation: 'portrait',
+      scope: '/',
+      gcm_sender_id: "274065036763698",
+      gcm_user_visible_only: true
+   },
+   icon: {
+      source: '~/assets/LOGO DATACOM.png',
+      fileName: 'LOGO DATACOM.png',
+   }, // disables the icon module
+   workbox: {
+       runtimeCaching: [
+          {
+              urlPattern: 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js',
+              handler: 'cacheFirst',
+              method: 'GET',
+              strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
+          }
+       ]
   },
   /*
   ** Build configuration

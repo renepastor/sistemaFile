@@ -79,7 +79,7 @@ export default {
             desserts: [],
             param:0
         }
-    },
+    }/*,
     async asyncData({$axios}) {
         const datos = await $axios.$get(`${process.env.BASE_URL}/modulos`,{headers: {'Ypfb-App-Access-Token' : process.env.API_KEY}})
         console.log(datos)
@@ -88,6 +88,6 @@ export default {
         } catch (error) {
             console.log('Error', error)
         }
-    }
+    }*/
 }
 </script>

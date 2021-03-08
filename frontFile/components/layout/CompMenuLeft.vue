@@ -10,9 +10,9 @@
             <v-list-item link>
                 <v-list-item-content>
                     <v-list-item-title class="title">
-                        <em>{{$auth.user.miUsuario.fullName}}</em>
+                        <em>{{$auth.user.miUsuario.alias}}</em>
                     </v-list-item-title>
-                    <v-list-item-subtitle>{{$auth.user.miUsuario.mail}}</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{$auth.user.miUsuario.cuenta}}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -23,30 +23,30 @@
             <v-list-group
                 v-for="item in items"
                 active-class="white--text"
-                :key="item.enlaceByEnlaId.enlacesByPadreId.nodes[1]"
-                v-model="item.active"
+                :key="item.id"
+                v-model="item.nivel"
                 multiple
                 no-action>
                 
-                    <template v-if="item.enlaceByEnlaId.enlacesByPadreId.nodes.length > 0" v-slot:activator>
+                    <template v-if="item.dependiente.length > 0" v-slot:activator>
                         <v-avatar color="red" size="32">
-                            <v-icon dark>{{item.enlaceByEnlaId.imagen}}</v-icon>
+                            <v-icon dark>{{item.imagen}}</v-icon>
                         </v-avatar>
                         <v-list-item-content class="ml-2">
-                            <v-list-item-title v-text="item.enlaceByEnlaId.nombre"></v-list-item-title>
+                            <v-list-item-title v-text="item.nombre"></v-list-item-title>
                         </v-list-item-content> 
                     </template>
-                    <div  v-if="item.enlaceByEnlaId.enlacesByPadreId.nodes.length > 0">
+                    <div  v-if="item.dependiente.length > 0">
                         <v-list-item
-                            v-for="child in item.enlaceByEnlaId.enlacesByPadreId.nodes[0].menuesByEnlaId.nodes"
-                            :key="child.enlaceByEnlaId.nivel" link outlined
-                            class="grey darken-3 pl-6 pr-2">
-                            <nuxt-link :to="child.enlaceByEnlaId.ruta" link class="white--text mx-0 px-0 m-0 p-0" color="red"
-                            active-class="red--text">
+                            v-for="child in item.dependiente"
+                            :key="child.id" link outlined
+                            class="grey darken-3 pl-6 pr-2"  :to="child.ruta">
+                                <v-list-item-icon>
+                                    <v-icon v-text="child.imagen"></v-icon>
+                                </v-list-item-icon>
                                 <v-list-item-content  @click="loader()" class="white--text mx-0 px-0 m-0 p-0">
-                                    <v-list-item-title v-text="child.enlaceByEnlaId.nombre" class="white--text"></v-list-item-title>
+                                    <v-list-item-title v-text="child.nombre" class="white--text"></v-list-item-title>
                                 </v-list-item-content>
-                            </nuxt-link>
                         </v-list-item>
                     </div>
             </v-list-group>
@@ -82,7 +82,14 @@ export default {
     created(){
         setTimeout(()=>{
             //this.items = this.$auth.$storage.getLocalStorage("perm");
-            this.items = [this.$auth.user.roleById.menuesByRolId.nodes[0]];
+            
+            var listMenu = (this.$auth.user.miMenu.nodes).filter((r)=> (r.nivel == 1));
+            listMenu.map((row,i) =>{
+                listMenu[i].dependiente = {};
+                listMenu[i].dependiente = (this.$auth.user.miMenu.nodes).filter((r)=> (r.padreId == row.id));
+            });
+            console.log(this.$auth.user.miMenu.nodes, listMenu);
+            this.items = listMenu;
         },200)
     },
     data(){

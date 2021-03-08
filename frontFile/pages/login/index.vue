@@ -30,12 +30,24 @@
                                       label="*Contraseña"
                                       required
                                       @click:append="toggleMarker"></v-text-field>
-                                  <v-btn
+                                  <v-btn outlined
                                       class="mr-4"
                                       type="submit"
                                       :disabled="invalid">
+                                      <v-icon left>
+                                          mdi-account-key
+                                      </v-icon>
                                       Ingresar
                                   </v-btn>
+                                  <nuxt-link 
+                                      to="/registrarse">
+                                      <v-btn outlined>
+                                          Registrese
+                                          <v-icon right>
+                                            mdi-smart-card
+                                          </v-icon>
+                                      </v-btn>
+                                    </nuxt-link>
                               </v-col>
                           </v-row>
                         </v-container>
@@ -43,7 +55,7 @@
                 </v-card>
             </v-col>
         </v-row>
-        </comp-loading>
+        </comp-loading>  
     </v-container>
 </template>
 
@@ -97,10 +109,11 @@ export default {
                     'Accept': `application/json`,
                     'Content-Type' : `application/json`
                   };
-          const response = await this.$auth.loginWith('local', {data: this.usuario,"headers":headers});
-          const REDIRECT_URI = this.$route.query.redirect || process.env.URI_DEFAULT
+          const q = {query: `mutation{auth(input:{pUsuario:"${this.usuario.pUsuario}", pClave:"${this.usuario.pClave}"}) {clientMutationId jwt}}`};
+          const response = await this.$auth.loginWith('local', {data: q,"headers":headers});
+          const REDIRECT_URI = this.$route.query.redirect || process.env.COVID_URL
           this.$router.push(REDIRECT_URI)
-          this.$store.dispatch('snackbar/setSnackbar', { color: 'teal', text: `Gracias por iniciar sesión, ${response.data.data.fullName} ` })
+          this.$store.dispatch('snackbar/setSnackbar', { color: 'teal', text: `Gracias por iniciar sesión, ${response.data.data.alias} ` })
         } catch (err) {
           console.log(err)
           this.$store.dispatch('snackbar/setSnackbar', { color: 'red', text: 'Hubo un error con el inicio de sesión.  Por favor intente de nuevo.' })

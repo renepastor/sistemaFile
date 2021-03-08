@@ -1,5 +1,5 @@
 <template lang="es">
-    <v-app id="inspire" ypfb>
+    <v-app id="inspire">
         <v-app-bar v-if="$auth.loggedIn"
             :clipped-left="clipped"
             fixed
@@ -12,7 +12,7 @@
             <v-toolbar-title v-text="title" />
             <v-spacer class="text-right">
                 <em v-if="$auth.loggedIn">
-                    <b>{{$auth.user.miUsuario.fullName}}</b>
+                    <b>{{$auth.user.miUsuario.alias}}</b>
                 </em>
                 <em v-else>
                     Usuario
@@ -77,7 +77,7 @@ export default {
     },
     data () {
         return {
-            title:'YPFB',
+            title:'*~.',
             loading:true,
             clipped: false, // icono menu Left
             drawer: null,

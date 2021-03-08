@@ -7,7 +7,6 @@ begin;
 create table base.tbl_tipos (
   id bigserial primary key,
   padre_id dllave,
---  codigo dtexto,
   nombre dtexto,
   valor dtexto,
   descripcion dtexto,
