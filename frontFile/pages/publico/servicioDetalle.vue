@@ -11,6 +11,7 @@
                     </div>
                     <v-row>
                         <v-col cols="12" sm="12" md="4" class="pa-0">
+                            <v-icon left x-large>{{ rowServicio.categoria.logo }}</v-icon> {{ rowServicio.categoria.nombre }}
                             <h3 class="text-center"><v-btn class="text" text>{{rowServicio.servicio }}</v-btn></h3>
                             <div>{{rowServicio.descripcion}}</div>
                         </v-col>
@@ -61,7 +62,7 @@ export default {
     async asyncData({$axios}) {
         var URLactual = window.location;
         var arrayUri = (URLactual.href).split("?");
-        const q = {query: `{servicioById(id:"${arrayUri[1]}"){id servicio descripcion}}`};
+        const q = {query: `{servicioById(id:"${arrayUri[1]}"){id servicio descripcion categoria:categoriaServicioByCategoriaId{nombre, logo}}}`};
         const datos = await $axios.$post(`${process.env.BASE_URL}/graphql`, q)
         try {
             return {rowServicio: datos.data.servicioById};
