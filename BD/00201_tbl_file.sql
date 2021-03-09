@@ -2,6 +2,10 @@
   fec: 19/06/2017
 */
 begin;
+drop schema publico CASCADE;
+commit;
+
+begin;
 drop schema files CASCADE;
 commit;
 

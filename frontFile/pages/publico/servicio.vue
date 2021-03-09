@@ -1,57 +1,29 @@
 <template>
   <div class="pa-2">
-            <v-card>
-                <v-card-title class="headline grey lighten-2 d-flex align-center">
+        <v-card>
+            <div class="pa-2 headline grey lighten-2  text-center">
                 LO QUE NECESITA ESTÁ AQUI
-                </v-card-title>
-                <v-card-text>
-                    <v-container>
+            </div>
+            <v-card-text>
+                <v-container>
+                    <div class="text-right">
+                        <img src="~/assets/LOGO ENTEL.png" alt="DATACOM" width="250" class="right VuetifyLogo">
+                    </div>
                     <v-row>
-                        <v-col v-for="row in listCategoria"
+                        <v-col v-for="row in listServicio"
                                 :key="row.id"
-                                cols="12" sm="12" md="4">
-                            <nuxt-link :to="'/pubico/servicio?'+row.id">
-                                <v-btn text>
-                                    <v-icon left x-large>{{ row.logo }}</v-icon> {{ row.nombre }}
-                                </v-btn>
-                            </nuxt-link>
+                                cols="12" sm="12" md="4" class="pa-0">
+                            <v-btn text :to="'/publico/servicioDetalle?'+row.id">
+                                <v-icon left>mdi-chevron-right</v-icon>{{ row.servicio }}
+                            </v-btn>
                         </v-col>
                     </v-row>
-                    <v-row>
-                    <v-col cols="12" sm="12" md="12">
-                        <v-text-field label="*Nombre" v-model="modulo.nombre" required></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="8" md="8">
-                        <v-text-field label="Icono" hint="Icono de .." v-model="modulo.icono">
-                        </v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="4" md="4">
-                        <v-text-field
-                        label="*Orden"
-                        hint="Orden para el menu"
-                        v-model="modulo.orden"
-                        persistent-hint
-                        required
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                        <v-text-field
-                        label="*Descripción"
-                        v-model="modulo.descripcion"
-                        required
-                        ></v-text-field>
-                    </v-col>
-                    
-                    </v-row>
                 </v-container>
-                <small>*Datos requeridos</small>
+            </v-card-text>
 
+            <v-divider></v-divider>
 
-                </v-card-text>
-
-                <v-divider></v-divider>
-
-                <v-card-actions>
+            <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
                     color="primary"
@@ -59,8 +31,8 @@
                     @click=" dialog = false; editModulo()">
                     Guardar
                 </v-btn>
-                </v-card-actions>
-            </v-card>
+            </v-card-actions>
+        </v-card>
     </div>
 </template>
 <script>
@@ -81,7 +53,7 @@ export default {
     data () {
         return {
             title:'Datos Personales',
-            listCategoria:[],
+            listServicio:[],
             desserts: [],
             modulo:{
                 nombre:this.param
@@ -90,29 +62,31 @@ export default {
         }
     },
     async asyncData({$axios}) {
-        const q = {query: `{allCategoriaServicios {
-                                nodes {
-                                    fechaInicio
-                                    fechaVigencia
-                                    id
-                                    logo
-                                    nombre
-                                }
+        var URLactual = window.location;
+        var arrayUri = (URLactual.href).split("?");
+        const q = {query: `{allServicios(condition:{categoriaId:"${arrayUri[1]}", estado:"C"}){
+                                nodes{id servicio}
                             }}`};
+        
         const datos = await $axios.$post(`${process.env.BASE_URL}/graphql`, q)
         try {
-            //this.listCategoria = datos.data.allCategoriaServicios.nodes;
-            return {listCategoria: datos.data.allCategoriaServicios.nodes};
+            return {listServicio: datos.data.allServicios.nodes};
         } catch (error) {
             console.log('Error', error)
         }
-        /*const datos = await $axios.$post(`${process.env.BASE_URL}/modulos`,{headers: {'Ypfb-App-Access-Token' : process.env.API_KEY}})
-        console.log(datos)
+    },
+    async created(){
+        var URLactual = window.location;
+        var arrayUri = (URLactual.href).split("?");
+        const q = {query: `{allServicios(condition:{categoriaId:"${arrayUri[1]}", estado:"C"}){
+                                nodes{id servicio}
+                            }}`};
+        const datos = await this.$axios.$post(`${process.env.BASE_URL}/graphql`, q)
         try {
-            return {desserts:datos.data};
+            this.listServicio = datos.data.allServicios.nodes;
         } catch (error) {
             console.log('Error', error)
-        }*/
+        }
     }
 }
 </script>

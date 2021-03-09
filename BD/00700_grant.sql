@@ -2,7 +2,7 @@
   fec: 19/06/2017
 */
 begin;
-create role visita login password 'semilleroL3n404054ng3l40103H3l3n1003R3n30908';
+create role publico login password 'semilleroL3n404054ng3l40103H3l3n1003R3n30908';
 commit;
 
 

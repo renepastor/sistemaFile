@@ -1,5 +1,5 @@
 <template>
-    <div class="pa-2">
+  <div class="pa-2">
         <v-card>
             <div class="pa-2 headline grey lighten-2  text-center">
                 LO QUE NECESITA ESTÁ AQUI
@@ -10,14 +10,9 @@
                         <img src="~/assets/LOGO ENTEL.png" alt="DATACOM" width="250" class="right VuetifyLogo">
                     </div>
                     <v-row>
-                        <v-col v-for="row in listCategoria"
-                                :key="row.id"
-                                cols="12" sm="12" md="4">
-                            <nuxt-link :to="'/publico/servicio?'+row.id">
-                                <v-btn text>
-                                    <v-icon left x-large>{{ row.logo }}</v-icon> {{ row.nombre }}
-                                </v-btn>
-                            </nuxt-link>
+                        <v-col cols="12" sm="12" md="4" class="pa-0">
+                            <h3 class="text-center"><v-btn class="text" text>{{rowServicio.servicio }}</v-btn></h3>
+                            <div>{{rowServicio.descripcion}}</div>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -55,7 +50,7 @@ export default {
     data () {
         return {
             title:'Datos Personales',
-            listCategoria:[],
+            rowServicio:{},
             desserts: [],
             modulo:{
                 nombre:this.param
@@ -64,29 +59,26 @@ export default {
         }
     },
     async asyncData({$axios}) {
-        const q = {query: `{allCategoriaServicios {
-                                nodes {
-                                    fechaInicio
-                                    fechaVigencia
-                                    id
-                                    logo
-                                    nombre
-                                }
-                            }}`};
+        var URLactual = window.location;
+        var arrayUri = (URLactual.href).split("?");
+        const q = {query: `{servicioById(id:"${arrayUri[1]}"){id servicio descripcion}}`};
         const datos = await $axios.$post(`${process.env.BASE_URL}/graphql`, q)
         try {
-            //this.listCategoria = datos.data.allCategoriaServicios.nodes;
-            return {listCategoria: datos.data.allCategoriaServicios.nodes};
+            return {rowServicio: datos.data.servicioById};
         } catch (error) {
             console.log('Error', error)
         }
-        /*const datos = await $axios.$post(`${process.env.BASE_URL}/modulos`,{headers: {'Ypfb-App-Access-Token' : process.env.API_KEY}})
-        console.log(datos)
+    },
+    async created(){
+        var URLactual = window.location;
+        var arrayUri = (URLactual.href).split("?");
+        const q = {query: `{servicioById(id:"${arrayUri[1]}"){id servicio descripcion}}`};
+        const datos = await this.$axios.$post(`${process.env.BASE_URL}/graphql`, q)
         try {
-            return {desserts:datos.data};
+            this.rowServicio = datos.data.servicioById;
         } catch (error) {
             console.log('Error', error)
-        }*/
+        }
     }
 }
 </script>
