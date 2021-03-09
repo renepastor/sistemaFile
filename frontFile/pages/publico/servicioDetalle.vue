@@ -11,13 +11,25 @@
                     </div>
                     
                     <v-row>
-                        <v-col cols="12" sm="12" md="4" class="pa-0">
-                            <v-btn text>
-                                <v-icon left x-large>{{ rowServicio.categoria.logo }}</v-icon> {{ rowServicio.categoria.nombre }}
-                            </v-btn>
+                        <v-btn text>
+                            <v-icon left x-large>{{ rowServicio.categoria.logo }}</v-icon> {{ rowServicio.categoria.nombre }}
+                        </v-btn>
+                        <v-col cols="12" sm="12" md="12">
                             <h3 class="text-center"><v-btn class="text" text>{{rowServicio.servicio }}</v-btn></h3>
                             <div>{{rowServicio.descripcion}}</div>
                         </v-col>
+                    </v-row>
+                    <v-row>
+                        <h3>REQUISITOS:</h3>
+                    </v-row>
+                    <v-row>
+                        <v-list>
+                            <v-list-item-group>
+                                <a href="javascript:void(0)" v-for="row in listRequisitos" :key="row.id">
+                                    {{ row.descripcion }},
+                                </a>
+                            </v-list-item-group>
+                        </v-list>
                     </v-row>
                 </v-container>
             </v-card-text>
@@ -55,6 +67,7 @@ export default {
         return {
             title:'Datos Personales',
             rowServicio:{},
+            listRequisitos:[],
             desserts: [],
             modulo:{
                 nombre:this.param
@@ -65,10 +78,16 @@ export default {
     async asyncData({$axios}) {
         var URLactual = window.location;
         var arrayUri = (URLactual.href).split("?");
-        const q = {query: `{servicioById(id:"${arrayUri[1]}"){id servicio descripcion categoria:categoriaServicioByCategoriaId{nombre, logo}}}`};
+        const q = {query: `{
+            servicioById(id:"${arrayUri[1]}"){id servicio descripcion categoria:categoriaServicioByCategoriaId{nombre, logo}}
+            allRequisitosServicios(condition:{servicioId:"${arrayUri[1]}" estado:"C"}){nodes{id requerido descripcion}}
+        }`};
         const datos = await $axios.$post(`${process.env.BASE_URL}/graphql`, q)
         try {
-            return {rowServicio: datos.data.servicioById};
+            return {
+                rowServicio: datos.data.servicioById,
+                listRequisitos: datos.data.allRequisitosServicios.nodes
+            };
         } catch (error) {
             console.log('Error', error)
         }
@@ -76,10 +95,14 @@ export default {
     async created(){
         var URLactual = window.location;
         var arrayUri = (URLactual.href).split("?");
-        const q = {query: `{servicioById(id:"${arrayUri[1]}"){id servicio descripcion categoria:categoriaServicioByCategoriaId{nombre, logo}}}`};
+        const q = {query: `{
+            servicioById(id:"${arrayUri[1]}"){id servicio descripcion categoria:categoriaServicioByCategoriaId{nombre, logo}}
+            allRequisitosServicios(condition:{servicioId:"${arrayUri[1]}" estado:"C"}){nodes{id requerido descripcion}}
+        }`};
         const datos = await this.$axios.$post(`${process.env.BASE_URL}/graphql`, q)
         try {
             this.rowServicio = datos.data.servicioById;
+            this.listRequisitos = datos.data.allRequisitosServicios.nodes;
         } catch (error) {
             console.log('Error', error)
         }
