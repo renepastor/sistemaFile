@@ -2,7 +2,7 @@
   fec: 19/06/2017
 */
 begin;
-drop schema publico CASCADE;
+create schema publico;
 commit;
 
 begin;
