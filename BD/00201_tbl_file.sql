@@ -80,7 +80,7 @@ CREATE TABLE files.servicios (
 );
 CREATE TABLE files.requisitos_servicios (
     id bigserial primary key,
-    servicio_id dllave,
+    plan_id dllave,
     descripcion dtexto,
     requerido dbool,
     estado destado,

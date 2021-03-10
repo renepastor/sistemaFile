@@ -20,7 +20,7 @@ INSERT INTO files.planes(categoria_id, plan, costo, fecha_inicio, fecha_vigencia
 (3, 'plan 3.1','234,32BS', now(), now(),'C','admin',NOW()),
 (3, 'plan 3.2','234,32BS', now(), now(),'C','admin',NOW());
 
-INSERT INTO files.requisitos_servicios(servicio_id, descripcion, requerido, estado, usuario, editado) VALUES
+INSERT INTO files.requisitos_servicios(plan_id, descripcion, requerido, estado, usuario, editado) VALUES
 (1, 'Fotocopia de CI', TRUE,'C','admin',NOW()),
 (1, 'Factura de Luz o Agua', TRUE,'C','admin',NOW()),
 (2, 'Fotocopia de CI', TRUE,'C','admin',NOW()),
