@@ -54,10 +54,21 @@ CREATE TABLE files.categoria_servicios (
     usuario duser,
     editado dfechahora
 );
-
+CREATE TABLE files.planes (
+    id bigserial primary key,
+    categoria_id dllave,
+    plan dtexto,
+    costo dtexto,
+    fecha_inicio dfecha,
+    fecha_vigencia dfecha,
+    estado destado,
+    usuario duser,
+    editado dfechahora
+);
 CREATE TABLE files.servicios (
     id bigserial primary key,
     categoria_id dllave,
+    requisitos dtexto,
     servicio dtexto,
     promocion dbool,
     descripcion dtexto,
