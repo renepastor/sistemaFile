@@ -13,7 +13,7 @@
                         <v-col v-for="row in listServicio"
                                 :key="row.id"
                                 cols="12" sm="12" md="4" class="pa-0">
-                            <v-btn text :to="'/publico/datosContrato?'+row.id">
+                            <v-btn text :to="'/publico/servicioDetalle?'+row.id">
                                 <v-icon left>mdi-chevron-right</v-icon>{{ row.servicio }}
                             </v-btn>
                         </v-col>
