@@ -13,7 +13,7 @@
                         <v-col v-for="row in listCategoria"
                                 :key="row.id"
                                 cols="12" sm="12" md="4">
-                            <nuxt-link :to="'/publico/servicio?'+row.id">
+                            <nuxt-link :to="'/publico/datosContrato?'+row.id">
                                 <v-btn text>
                                     <v-icon left x-large>{{ row.logo }}</v-icon> {{ row.nombre }}
                                 </v-btn>
