@@ -2,8 +2,7 @@
     <div class="pa-2">
         <v-card>
             <div class="pa-2 headline grey lighten-2  text-center">
-                <img src="~/assets/logo1.png" alt="DATACOM" class="">
-                <h5>SOLICITA TU SERVICIOS</h5>
+                LO QUE NECESITA ESTÁ AQUI
             </div>
             <v-card-text>
                 <v-container>
@@ -11,23 +10,30 @@
                         <img src="~/assets/LOGO ENTEL.png" alt="DATACOM" width="250" class="right VuetifyLogo">
                     </div>
                     <v-row>
+                        <v-col v-for="row in listCategoria"
+                                :key="row.id"
+                                cols="12" sm="12" md="4">
+                            <nuxt-link :to="'/publico/servicio?'+row.id">
+                                <v-btn text>
+                                    <v-icon left x-large>{{ row.logo }}</v-icon> {{ row.nombre }}
+                                </v-btn>
+                            </nuxt-link>
+                        </v-col>
                     </v-row>
                 </v-container>
             </v-card-text>
 
             <v-divider></v-divider>
 
-            <div class="text-center pa-2">
-                <nuxt-link to="/publico/categoriaServ">
-                    <v-btn outlined color="indigo">Servicios</v-btn>
-                </nuxt-link>
-                <nuxt-link to="/publico/categoria">
-                    <v-btn outlined color="indigo">REALIZA TU CONTRATO</v-btn>
-                </nuxt-link>
-                <nuxt-link to="/publico/help">
-                    <v-btn outlined color="indigo">¿TE AYUDO?</v-btn>
-                </nuxt-link>
-            </div>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="primary"
+                    text
+                    @click=" dialog = false; editModulo()">
+                    Guardar
+                </v-btn>
+            </v-card-actions>
         </v-card>
     </div>
 </template>

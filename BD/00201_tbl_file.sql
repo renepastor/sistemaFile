@@ -44,21 +44,28 @@ CREATE TABLE base.personas (
     editado dfechahora
 );
 
-CREATE TABLE files.categoria_servicios (
+
+CREATE TABLE files.ciudades (
     id bigserial primary key,
     nombre dtexto,
-    logo dtexto,
-    fecha_inicio dfecha,
-    fecha_vigencia dfecha,
+    sigla dtexto,
     estado destado,
     usuario duser,
     editado dfechahora
 );
-CREATE TABLE files.planes (
+CREATE TABLE files.multicentros (
     id bigserial primary key,
-    categoria_id dllave,
-    plan dtexto,
-    costo dtexto,
+    nombre dtexto,
+    direccion dtexto,
+    coordena dpunto,
+    estado destado,
+    usuario duser,
+    editado dfechahora
+);
+CREATE TABLE files.categoria_servicios (
+    id bigserial primary key,
+    nombre dtexto,
+    logo dtexto,
     fecha_inicio dfecha,
     fecha_vigencia dfecha,
     estado destado,
@@ -72,6 +79,18 @@ CREATE TABLE files.servicios (
     servicio dtexto,
     promocion dbool,
     descripcion dtexto,
+    fecha_inicio dfecha,
+    fecha_vigencia dfecha,
+    estado destado,
+    usuario duser,
+    editado dfechahora
+);
+
+CREATE TABLE files.planes (
+    id bigserial primary key,
+    servicio_id dllave,
+    plan dtexto,
+    costo dtexto,
     fecha_inicio dfecha,
     fecha_vigencia dfecha,
     estado destado,
