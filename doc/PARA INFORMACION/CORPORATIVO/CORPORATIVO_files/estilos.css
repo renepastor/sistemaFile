@@ -1,0 +1,113 @@
+/*!
+ * Bootstrap v3.3.0 (http://getbootstrap.com)
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+html {
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+}
+body {
+  margin: 20px;
+}
+.modal-content1{
+   min-height: 70%;	
+  padding: 20px;
+  border-bottom: 0px solid #e5e5e5; 
+  background-color:#FFF;
+  background-repeat: repeat;
+	}
+
+.modal-header1 {
+  min-height: 30px;
+  padding: 10px;
+  border-bottom: 0px solid #e5e5e5; 
+  background-color:#006699;
+  /*background-image:url(../img/header4.jpg);*/
+  background-repeat: repeat;
+  
+   -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border: 1px solid #006666 !important;
+  border: 0px solid rgba(0, 0, 0, .2);
+  border-radius: 6px;
+  outline: 0;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+          box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+
+.modal-body1 {
+  position: relative;
+  padding: 15px;
+}
+.modal-footer1 {
+  background-color: #FFF;  
+  padding: 5px;
+  text-align: right;
+  border-top: 0px solid #e5e5e5;
+  
+}
+.menu{
+	width:90%;
+	padding:1px;
+	}
+.menu p{
+	display:inline;
+	padding:10px;
+	width:50px;
+	alignment-adjust:central;
+	color:FFF;
+	}
+.menu p a:{
+	display:inline;
+	color:FFF;
+	
+	}
+.menu p a:visited{
+	display:inline;
+	padding:10px;
+	width:50px;
+	alignment-adjust:auto;
+	color:FFF;
+	
+	}	
+.menu p a:link{
+	display:inline;
+	padding:10px;
+	width:50px;
+	alignment-adjust:auto;
+	color:FFF;
+    text-decoration:none;
+	}	
+.menu p a:active{
+	display:inline;
+	padding:10px;
+	width:50px;
+	alignment-adjust:auto;
+	color:FFF;
+	}		
+.menu a:hover{
+	display:inline;
+	color:#f0a30a !important;
+	text-decoration:underline !important;
+	}
+.centro{
+	 text-align:center;
+	}	
+.input{
+	padding:10px;
+	 -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border: 1px solid #CCC !important;
+  border: 0px solid rgba(0, 0, 0, .2);
+  border-radius: 3px;
+  outline: 0;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+          box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+	}	
+.tam-50{
+	 width:50%;
+	}	

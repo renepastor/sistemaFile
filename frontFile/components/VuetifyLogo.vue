@@ -1,5 +1,5 @@
 <template>
-  <img src="~/assets/LOGO DATACOM.png" alt="DATACOM" width="60%" class="VuetifyLogo">
+  <img src="~/assets/logo.png" alt="DATACOM" width="60%" class="VuetifyLogo">
 </template>
 
 <style>

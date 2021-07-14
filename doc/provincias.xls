@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+<Styles>
+ <Style ss:ID="title">
+   <Font ss:Bold="1" ss:FontName="Times New Roman" ss:Size="18"/>
+   <Alignment ss:Horizontal="Center" ss:WrapText="1"/>
+ </Style>
+ <Style ss:ID="subtitle">
+   <Font ss:Bold="1" ss:FontName="Times New Roman" ss:Size="12"/>
+   <Alignment ss:Horizontal="Center" ss:WrapText="1"/>
+ </Style>
+ <Style ss:ID="filterdesc">
+   <Font ss:Bold="0" ss:FontName="Times New Roman" ss:Size="10"/>
+   <Alignment ss:Horizontal="Center"/>
+ </Style>
+ <Style ss:ID="system">
+   <Font ss:FontName="Times New Roman" ss:Size="8"/>
+   <Alignment ss:Horizontal="Left"/>
+ </Style>
+ <Style ss:ID="author">
+   <Font ss:FontName="Times New Roman" ss:Size="8"/>
+   <Alignment ss:Horizontal="Right"/>
+ </Style>
+ <Style ss:ID="headers">
+   <Font ss:Bold="1" ss:Color="#dddddd" ss:Size="10"/>
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Interior ss:Color="#333333" ss:Pattern="Solid"/>
+   <Borders>
+     <Border ss:Position="Bottom" ss:Color="#dddddd" ss:LineStyle="Continuous"/>
+   </Borders>
+ </Style>
+ <Style ss:ID="even">
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+ </Style>
+ <Style ss:ID="odd">
+   <Interior ss:Color="#FFF6DF" ss:Pattern="Solid"/>
+ </Style>
+</Styles>
+<Worksheet ss:Name="Report"><!-- excelSheetName -->
+<Table>
+<Column ss:Width="29" ss:AutoFitWidth="1"/><Column ss:Width="290" ss:AutoFitWidth="1"/><Column ss:Width="58" ss:AutoFitWidth="1"/><!-- $tmpXlsColDef -->
+<Column ss:Hidden="1" ss:Span="1024" ss:Width="0"/>
+<Row />
+<Row ss:Height="9">
+  <Cell ss:StyleID="system"><Data ss:Type="String">edan</Data></Cell><!-- $this->systemName -->
+  <Cell /><!-- $emptyCols -->
+  <Cell ss:StyleID="author"><Data ss:Type="String"></Data></Cell><!-- $this->userName -->
+</Row>
+<Row ss:Height="9">
+  <Cell ss:StyleID="system"><Data ss:Type="String"></Data></Cell><!-- $this->projectName -->
+  <Cell /><!-- $emptyCols -->
+  <Cell ss:StyleID="author"><Data ss:Type="String">2021-03-17 00:30:06</Data></Cell><!-- $this->_reportDate -->
+</Row>
+<Row />
+<Row ss:Height="22">
+  <Cell ss:MergeAcross="2" ss:StyleID="title"><!-- $cols - 1 -->
+    <Data ss:Type="String">Provincias de Bolivia</Data><!-- $this->_title -->
+  </Cell>
+</Row>
+<Row ss:Height="18">
+  <Cell ss:MergeAcross="2" ss:StyleID="subtitle"><!-- $cols - 1 -->
+    <Data ss:Type="String"></Data><!-- $this->_subtitle -->
+  </Cell>
+</Row>
+<Row ss:Height="18">
+  <Cell ss:MergeAcross="2" ss:StyleID="filterdesc"><!-- $cols - 1 -->
+    <Data ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40"></Data><!-- $this->_showExcelFilterDescription() -->
+  </Cell>
+</Row>
+<Row />
+
+<!-- Report Body -->
+<Row ss:StyleID="headers" ss:AutoFitHeight="1" ss:Height="36">
+<Cell><Data ss:Type="String"><B></B></Data></Cell>
+<Cell><Data ss:Type="String"><B>Provincia</B></Data></Cell>
+<Cell><Data ss:Type="String"><B>Código INE</B></Data></Cell>
+</Row>
+<!-- Report Body --><Row>
+<Cell colspan="3"><Data ss:Type="String">Chuquisaca</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Oropeza</Data></Cell>
+<Cell><Data ss:Type="Number">0101</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Azurduy</Data></Cell>
+<Cell><Data ss:Type="Number">0102</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Zudañez</Data></Cell>
+<Cell><Data ss:Type="Number">0103</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Tomina</Data></Cell>
+<Cell><Data ss:Type="Number">0104</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Hernando Siles</Data></Cell>
+<Cell><Data ss:Type="Number">0105</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Yamparaez</Data></Cell>
+<Cell><Data ss:Type="Number">0106</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Nor Cinti</Data></Cell>
+<Cell><Data ss:Type="Number">0107</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Belisario Boeto</Data></Cell>
+<Cell><Data ss:Type="Number">0108</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Sud Cinti</Data></Cell>
+<Cell><Data ss:Type="Number">0109</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Luis Calvo</Data></Cell>
+<Cell><Data ss:Type="Number">0110</Data></Cell>
+</Row>
+<Row>
+<Cell colspan="3"><Data ss:Type="String">La Paz</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Murillo</Data></Cell>
+<Cell><Data ss:Type="Number">0201</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Omasuyos</Data></Cell>
+<Cell><Data ss:Type="Number">0202</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Pacajes</Data></Cell>
+<Cell><Data ss:Type="Number">0203</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Camacho</Data></Cell>
+<Cell><Data ss:Type="Number">0204</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Muñecas</Data></Cell>
+<Cell><Data ss:Type="Number">0205</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Larecaja</Data></Cell>
+<Cell><Data ss:Type="Number">0206</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Franz Tamayo</Data></Cell>
+<Cell><Data ss:Type="Number">0207</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Ingavi</Data></Cell>
+<Cell><Data ss:Type="Number">0208</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Loayza</Data></Cell>
+<Cell><Data ss:Type="Number">0209</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Inquisivi</Data></Cell>
+<Cell><Data ss:Type="Number">0210</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Sur Yungas</Data></Cell>
+<Cell><Data ss:Type="Number">0211</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Los Andes</Data></Cell>
+<Cell><Data ss:Type="Number">0212</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Aroma</Data></Cell>
+<Cell><Data ss:Type="Number">0213</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Nor Yungas</Data></Cell>
+<Cell><Data ss:Type="Number">0214</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Abel Iturralde</Data></Cell>
+<Cell><Data ss:Type="Number">0215</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Bautista Saavedra</Data></Cell>
+<Cell><Data ss:Type="Number">0216</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Manco Kapac</Data></Cell>
+<Cell><Data ss:Type="Number">0217</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Gualberto Villarroel</Data></Cell>
+<Cell><Data ss:Type="Number">0218</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Gral. J. Manuel Pando</Data></Cell>
+<Cell><Data ss:Type="Number">0219</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Caranavi</Data></Cell>
+<Cell><Data ss:Type="Number">0220</Data></Cell>
+</Row>
+<Row>
+<Cell colspan="3"><Data ss:Type="String">Cochabamba</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Cercado</Data></Cell>
+<Cell><Data ss:Type="Number">0301</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Campero</Data></Cell>
+<Cell><Data ss:Type="Number">0302</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Ayopaya</Data></Cell>
+<Cell><Data ss:Type="Number">0303</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Esteban Arce</Data></Cell>
+<Cell><Data ss:Type="Number">0304</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Arani</Data></Cell>
+<Cell><Data ss:Type="Number">0305</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Arque</Data></Cell>
+<Cell><Data ss:Type="Number">0306</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Capinota</Data></Cell>
+<Cell><Data ss:Type="Number">0307</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">German Jordan</Data></Cell>
+<Cell><Data ss:Type="Number">0308</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Quillacollo</Data></Cell>
+<Cell><Data ss:Type="Number">0309</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Chapare</Data></Cell>
+<Cell><Data ss:Type="Number">0310</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Tapacari</Data></Cell>
+<Cell><Data ss:Type="Number">0311</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Carrasco</Data></Cell>
+<Cell><Data ss:Type="Number">0312</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Mizque</Data></Cell>
+<Cell><Data ss:Type="Number">0313</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Punata</Data></Cell>
+<Cell><Data ss:Type="Number">0314</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Bolivar</Data></Cell>
+<Cell><Data ss:Type="Number">0315</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Tiraque</Data></Cell>
+<Cell><Data ss:Type="Number">0316</Data></Cell>
+</Row>
+<Row>
+<Cell colspan="3"><Data ss:Type="String">Oruro</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Cercado</Data></Cell>
+<Cell><Data ss:Type="Number">0401</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Abaroa</Data></Cell>
+<Cell><Data ss:Type="Number">0402</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Carangas</Data></Cell>
+<Cell><Data ss:Type="Number">0403</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Sajama</Data></Cell>
+<Cell><Data ss:Type="Number">0404</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Litoral</Data></Cell>
+<Cell><Data ss:Type="Number">0405</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Poopo</Data></Cell>
+<Cell><Data ss:Type="Number">0406</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Pantaleon Dalence</Data></Cell>
+<Cell><Data ss:Type="Number">0407</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Ladislao Cabrera</Data></Cell>
+<Cell><Data ss:Type="Number">0408</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Sabaya</Data></Cell>
+<Cell><Data ss:Type="Number">0409</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Saucari</Data></Cell>
+<Cell><Data ss:Type="Number">0410</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Tomas Barron</Data></Cell>
+<Cell><Data ss:Type="Number">0411</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Sur Carangas</Data></Cell>
+<Cell><Data ss:Type="Number">0412</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">S. Pedro de Totora</Data></Cell>
+<Cell><Data ss:Type="Number">0413</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Sebastian Pagador</Data></Cell>
+<Cell><Data ss:Type="Number">0414</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Mejillones</Data></Cell>
+<Cell><Data ss:Type="Number">0415</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Nor Carangas</Data></Cell>
+<Cell><Data ss:Type="Number">0416</Data></Cell>
+</Row>
+<Row>
+<Cell colspan="3"><Data ss:Type="String">Potosí</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Tomas Frias</Data></Cell>
+<Cell><Data ss:Type="Number">0501</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Rafael Bustillo</Data></Cell>
+<Cell><Data ss:Type="Number">0502</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Cornelio Saavedra</Data></Cell>
+<Cell><Data ss:Type="Number">0503</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Chayanta</Data></Cell>
+<Cell><Data ss:Type="Number">0504</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Charcas</Data></Cell>
+<Cell><Data ss:Type="Number">0505</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Nor Chichas</Data></Cell>
+<Cell><Data ss:Type="Number">0506</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Alonzo de Ibañez</Data></Cell>
+<Cell><Data ss:Type="Number">0507</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Sur Chichas</Data></Cell>
+<Cell><Data ss:Type="Number">0508</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Nor Lipez</Data></Cell>
+<Cell><Data ss:Type="Number">0509</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Sur Lipez</Data></Cell>
+<Cell><Data ss:Type="Number">0510</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Jose Maria Linares</Data></Cell>
+<Cell><Data ss:Type="Number">0511</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Antonio Quijarro</Data></Cell>
+<Cell><Data ss:Type="Number">0512</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Gral. B. Bilbao</Data></Cell>
+<Cell><Data ss:Type="Number">0513</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Daniel Campos</Data></Cell>
+<Cell><Data ss:Type="Number">0514</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Modesto Omiste</Data></Cell>
+<Cell><Data ss:Type="Number">0515</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Enrique Baldiviezo</Data></Cell>
+<Cell><Data ss:Type="Number">0516</Data></Cell>
+</Row>
+<Row>
+<Cell colspan="3"><Data ss:Type="String">Tarija</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Cercado</Data></Cell>
+<Cell><Data ss:Type="Number">0601</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Arce</Data></Cell>
+<Cell><Data ss:Type="Number">0602</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Gran Chaco</Data></Cell>
+<Cell><Data ss:Type="Number">0603</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Avilez</Data></Cell>
+<Cell><Data ss:Type="Number">0604</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Mendez</Data></Cell>
+<Cell><Data ss:Type="Number">0605</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Burnet O' Connor</Data></Cell>
+<Cell><Data ss:Type="Number">0606</Data></Cell>
+</Row>
+<Row>
+<Cell colspan="3"><Data ss:Type="String">Santa Cruz</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Andres Ibañez</Data></Cell>
+<Cell><Data ss:Type="Number">0701</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Warnes</Data></Cell>
+<Cell><Data ss:Type="Number">0702</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Velasco</Data></Cell>
+<Cell><Data ss:Type="Number">0703</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Ichilo</Data></Cell>
+<Cell><Data ss:Type="Number">0704</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Chiquitos</Data></Cell>
+<Cell><Data ss:Type="Number">0705</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Sara</Data></Cell>
+<Cell><Data ss:Type="Number">0706</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Cordillera</Data></Cell>
+<Cell><Data ss:Type="Number">0707</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Vallegrande</Data></Cell>
+<Cell><Data ss:Type="Number">0708</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Florida</Data></Cell>
+<Cell><Data ss:Type="Number">0709</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Obispo Santiestevan</Data></Cell>
+<Cell><Data ss:Type="Number">0710</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Ñuflo de Chavez</Data></Cell>
+<Cell><Data ss:Type="Number">0711</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Angel Sandoval</Data></Cell>
+<Cell><Data ss:Type="Number">0712</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Caballero</Data></Cell>
+<Cell><Data ss:Type="Number">0713</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">German Busch</Data></Cell>
+<Cell><Data ss:Type="Number">0714</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Guarayos</Data></Cell>
+<Cell><Data ss:Type="Number">0715</Data></Cell>
+</Row>
+<Row>
+<Cell colspan="3"><Data ss:Type="String">Beni</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Cercado</Data></Cell>
+<Cell><Data ss:Type="Number">0801</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Vaca Diez</Data></Cell>
+<Cell><Data ss:Type="Number">0802</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Gral. J. Ballivian</Data></Cell>
+<Cell><Data ss:Type="Number">0803</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Yacuma</Data></Cell>
+<Cell><Data ss:Type="Number">0804</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Moxos</Data></Cell>
+<Cell><Data ss:Type="Number">0805</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Marban</Data></Cell>
+<Cell><Data ss:Type="Number">0806</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Mamore</Data></Cell>
+<Cell><Data ss:Type="Number">0807</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Itenez</Data></Cell>
+<Cell><Data ss:Type="Number">0808</Data></Cell>
+</Row>
+<Row>
+<Cell colspan="3"><Data ss:Type="String">Pando</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Nicolas Suarez</Data></Cell>
+<Cell><Data ss:Type="Number">0901</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Manuripi</Data></Cell>
+<Cell><Data ss:Type="Number">0902</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Madre de Dios</Data></Cell>
+<Cell><Data ss:Type="Number">0903</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Abuna</Data></Cell>
+<Cell><Data ss:Type="Number">0904</Data></Cell>
+</Row>
+<Row>
+<Cell><Data ss:Type="String"></Data></Cell>
+<Cell><Data ss:Type="String">Gral. Federico Roman</Data></Cell>
+<Cell><Data ss:Type="Number">0905</Data></Cell>
+</Row>
+</Table>
+</Worksheet>
+</Workbook>

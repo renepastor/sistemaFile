@@ -44,7 +44,6 @@ CREATE TABLE base.personas (
     editado dfechahora
 );
 
-
 CREATE TABLE files.ciudades (
     id bigserial primary key,
     nombre dtexto,
@@ -75,10 +74,11 @@ CREATE TABLE files.categoria_servicios (
 CREATE TABLE files.servicios (
     id bigserial primary key,
     categoria_id dllave,
-    requisitos dtexto,
+    --requisitos dtexto,
     servicio dtexto,
     promocion dbool,
-    descripcion dtexto,
+    formulario dtexto,
+    informacion dtexto,
     fecha_inicio dfecha,
     fecha_vigencia dfecha,
     estado destado,
@@ -91,6 +91,8 @@ CREATE TABLE files.planes (
     servicio_id dllave,
     plan dtexto,
     costo dtexto,
+    requisito dtexto,
+    con_requisito dbool2,
     fecha_inicio dfecha,
     fecha_vigencia dfecha,
     estado destado,
@@ -99,13 +101,15 @@ CREATE TABLE files.planes (
 );
 CREATE TABLE files.requisitos_servicios (
     id bigserial primary key,
-    plan_id dllave,
+    servicio_id dllave,
     descripcion dtexto,
     requerido dbool,
     estado destado,
     usuario duser,
     editado dfechahora
 );
+
+
 /*
 CREATE TABLE files.documento_personal (
     id bigserial primary key,
