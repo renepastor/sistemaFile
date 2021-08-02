@@ -1,8 +1,8 @@
 #!/bin/bash
 
 postgraphile \
-  --connection postgres://localhost:5432/bdfile \
-  --schema files \
+  --connection postgres://localhost:5432/sinergia \
+  --schema base \
   --host localhost \
   --port 8005 \
   --enhance-graphiql \
