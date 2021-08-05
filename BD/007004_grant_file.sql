@@ -19,6 +19,14 @@ begin;
    grant SELECT ON base.ubicacion_geografica to protegido;
    grant EXECUTE ON FUNCTION base.fn_tbl_tipos(text) to protegido;
    grant SELECT ON base.tbl_tipos to protegido;
+   grant SELECT ON files.multicentros to protegido;
+   grant EXECUTE ON FUNCTION base.fn_p_multicentro(dllave) to protegido;
+   grant INSERT ON files.simple_ilimitado to protegido;
+   grant all ON base.usuario_rol to protegido;
+   grant all ON base.usuario to protegido;
+   GRANT USAGE ON SEQUENCE base.usuario_id_seq TO protegido;
+   GRANT USAGE ON SEQUENCE base.usuario_rol_id_seq TO protegido;
+   GRANT USAGE ON SEQUENCE files.simple_ilimitado_id_seq TO protegido;
    grant EXECUTE ON FUNCTION base.add_simple_ilimitado(
   foto_ci text,
   foto_factura text,
@@ -49,9 +57,15 @@ begin;
   ciudad_id dllave,
   provincia_nuevo_id dllave,
   checkbox_pospago_ilimitado boolean,
-  numero_pospago text
+  numero_pospago text,
+  ciudad_atencion_id dllave,
+  multicentro_id dllave,
+  hora_propuesta dhora,
+  primer_numero text,
+  segundo_numero text,
+  tipo_atencion_id dllave
 ) to protegido;
-
+  grant select ON base.vw_simple_ilimitado to protegido;
  --grant execute on type base.jwt to files;
   --grant execute on type base.jwt to publico;
  --GRANT SELECT ON nucleo.vw_usuario TO publico;

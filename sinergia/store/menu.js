@@ -35,6 +35,15 @@ export const mutations = {
                                     creacion
                                 }}}`};
         const resMenu = await this.$axios.$post(`/graphql`, q)
+        
+        if(resMenu.errors){
+            state.listaMenu = {
+                listaModulos:[],
+                listaRecursos:[],
+                usuario:{},
+            }
+            return false;
+        }
         const listaMenu = resMenu.data.miMenu.nodes;
         const listaModulos = [];
         listaMenu.forEach(categoria => {

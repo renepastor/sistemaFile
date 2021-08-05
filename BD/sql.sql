@@ -423,55 +423,19 @@ SELECT ROW_NUMBER () OVER (ORDER BY rec.id) id,
    AND usu.activo
    AND rolrec.lectura;
 */
---drop VIEW base.vw_permiso cascade;
-CREATE OR REPLACE VIEW base.vw_permiso
-AS
-SELECT DISTINCT --ROW_NUMBER () OVER (ORDER BY rec.id) id,
-       usu.username,
-       modu.id_aplicacion ,
-       modu.posicion posicion_modulo,
-       modu.nombre modulo,
-       modu.icono icono_modulo,
-       rec.posicion posicion_recurso,
-       rec.titulo recurso,
-       rec.uri,
-       rec.es_menu,
-       rec.icono icono_recurso,
-       rolrec.lectura,
-       rolrec.creacion,
-       rolrec.modificacion,
-       rolrec.eliminacion
-  FROM base.modulo  modu,
-       base.recurso  rec,
-       base.rol      rol,
-       base.rol_recurso  rolrec,
-       base.usuario_rol  usrrol,
-       base.usuario usu
- WHERE usrrol.id_rol = rol.id
-   AND usrrol.id_usuario = usu.id
-   AND rolrec.id_rol = rol.id
-   AND rolrec.id_recurso = rec.id
-   AND rec.id_modulo = modu.id
-   AND modu.activo
-   AND rec.activo
-   AND rol.activo
-   AND rolrec.activo
-   AND usrrol.activo
-   AND usu.activo
-   AND rolrec.lectura;
 
+--create VIEW base.vw_simple_ilimitado AS
+--  SELECT * FROM files.simple_ilimitado;
 
---drop function base.mi_menu(dllave);
-CREATE OR REPLACE FUNCTION base.mi_menu(dllave) RETURNS SETOF base.vw_permiso AS $$
+CREATE OR REPLACE FUNCTION base.fn_simple_ilimitado() RETURNS SETOF files.simple_ilimitado AS $$
   SELECT *
-  FROM base.vw_permiso
-  WHERE username = current_setting('jwt.claims.username')
-  AND id_aplicacion = $1
+  FROM files.simple_ilimitado
+  WHERE activo
 $$ language sql stable;
-COMMENT ON FUNCTION base.mi_menu(dllave) is 'Buscando menu de usuario logueado';
+COMMENT ON FUNCTION base.fn_simple_ilimitado() is 'Buscando Usuario en session';
 
-
-
+grant EXECUTE ON FUNCTION base.fn_simple_ilimitado() to protegido;
+   
 
 commit;
 
@@ -519,3 +483,6 @@ CREATE TABLE files. (
     editor dtexto
 );
 */
+
+
+

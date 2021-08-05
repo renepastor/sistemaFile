@@ -78,7 +78,7 @@ export default {
     middleware: 'auth',
     data () {
         return {
-            title:'Asignar Hora',
+            title:'Revisar Documento',
             lista: [],
             pagina:1,
             sig:this.pagina,

@@ -108,26 +108,6 @@ CREATE TABLE files.requisitos_servicios (
     editor dtexto
 );
 
-CREATE TABLE files.agenda (
-    id bigserial primary key,
-    ciudad_id dllave,
-    sucursal_id dllave,
-    hora_propuesta dhora,
-    fecha_programada dfecha,
-    hora_programada dhora,
-    adulto_mayor dbool,
-    discapacitado dbool,
-    embarazada dbool,
-    primer_numero dtexto,
-    segundo_numero dtexto,
-    activo dbool,
-    creado dfechahora,
-    creador dtexto,
-    editado dfechahora,
-    editor dtexto
-);
-
-
 
 /*
 CREATE TABLE files.documento_personal (
@@ -202,12 +182,26 @@ CREATE TABLE files.simple_ilimitado (
     provincia_nuevo_id dllave,
     checkbox_pospago_ilimitado dbool,
     numero_pospago dtexto,
+    
+    ciudad_atencion_id dllave,
+    multicentro_id dllave,
+    tipo_atencion_id dllave,
+    hora_propuesta dhora,
+    primer_numero dtexto,
+    segundo_numero dtexto,
+    estado_solicitado destado,
+    fecha_programada dfecha2,
+    hora_programada dhora,
+    
     activo dbool,
     creado dfechahora,
     creador dtexto,
     editado dfechahora,
     editor dtexto
 );
+
+create VIEW base.vw_simple_ilimitado AS
+  SELECT * FROM files.simple_ilimitado;
 
 commit;
 

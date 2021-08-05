@@ -16,45 +16,43 @@
                             </v-col>
                             <v-col cols="12" sm="6" md="6">
                                 <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listMulticentro" label="Multicenro mas cercano" v-model="agenda.multicentroId" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
+                                    <v-select :items="listMulticentro" label="Multicenro mas cercano" v-model="agenda.multicentroId" item-text="direccion" item-value="id" :error-messages="errors" dense></v-select>
                                 </val-prov>
                             </v-col>
                             <v-col cols="12" sm="4" md="3">
                                 <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-menu v-model="fechaModal" :close-on-content-click="false" max-width="290px" min-width="auto">
+                                    <v-menu ref="menu" v-model="fechaModal" offset-y :close-on-content-click="false">
                                         <template v-slot:activator="{ on, attrs }">
-                                            <v-text-field v-model="fechaFormat" label="Fecha de Nacimiento" v-bind="attrs" v-on="on" prepend-icon="mdi-calendar" :error-messages="errors" dense></v-text-field>
+                                            <v-text-field v-model="agenda.hora" label="Fecha de Nacimiento" v-bind="attrs" v-on="on" append-icon="mdi-clock-time-four-outline" :error-messages="errors" dense></v-text-field>
                                         </template>
-                                        <v-date-picker v-model="agenda.hora" @change="fechaModal = false" @input="fechaFormat = $moment(agenda.fechaNacimiento ).format('DD/MM/YYYY')" no-title :error-messages="errors" dense></v-date-picker>
+                                        <v-time-picker v-if="fechaModal" v-model="agenda.hora" full-width  @click:minute="$refs.menu.save(time)" no-title></v-time-picker>
                                     </v-menu>
                                 </val-prov>
                             </v-col>
-
-                            <v-col cols="12" sm="6" md="6">
+                            <v-col cols="12" sm="4" md="4">
                                 <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-checkbox v-model="agenda.adultomayor" label="Tercera edad" :error-messages="errors" dense></v-checkbox>
+                                    <v-text-field label="1° Numeros de celular" v-model="agenda.primerNumero" rows="1" :error-messages="errors" maxlength="8" dense></v-text-field>
                                 </val-prov>
                             </v-col>
-                            <v-col cols="12" sm="6" md="6">
+                            <v-col cols="12" sm="4" md="4">
                                 <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-checkbox v-model="agenda.discapacitado" label="Persona con discapacidad" :error-messages="errors" dense></v-checkbox>
+                                    <v-text-field label="2° Numeros de celular" v-model="agenda.segundoNumero" rows="1" :error-messages="errors" maxlength="8" dense></v-text-field>
                                 </val-prov>
                             </v-col>
-                            <v-col cols="12" sm="6" md="6">
+                            <v-col cols="12" sm="4" md="4">
                                 <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-checkbox v-model="agenda.embarazada" label="Persona embarazada" :error-messages="errors" dense></v-checkbox>
+                                    <v-radio-group label="Tipo Atencion Preferencial" v-model="agenda.tipoAtencionId">
+                                        <v-radio dense
+                                            v-for="row in listTipoAtencion"
+                                            :key="row.id"
+                                            :label="`${row.descripcion}`"
+                                            :value="row.id"
+                                            :error-messages="errors"
+                                        ></v-radio>
+                                    </v-radio-group>
                                 </val-prov>
                             </v-col>
-                            <v-col cols="12" sm="12" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-textarea label="1° Numeros de celular" v-model="agenda.primerNumero" rows="1" readonly :error-messages="errors" dense></v-textarea>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="12" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-textarea label="2° Numeros de celular" v-model="agenda.segundoNumero" rows="1" readonly :error-messages="errors" dense></v-textarea>
-                                </val-prov>
-                            </v-col>
+                            
                         </v-row>
                         <v-divider></v-divider>
                         <div class="text-center pa-2">
@@ -89,7 +87,8 @@ export default {
         date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         menu2: false,
         agenda:{
-            ciudadId:0
+            ciudadId:0,
+            hora:'00:00'
         },
         checkbox: true,
         valid: true,
@@ -101,6 +100,7 @@ export default {
         telefonos:'',
         listCiudad:[],
         listMulticentro:[],
+        listTipoAtencion:[],
         rules: [
             value => !!value || 'Required.',
             value => (value && value.length >= 3) || 'Min 3 characters',
@@ -131,21 +131,23 @@ export default {
                             listDepartamento:allUbicacionGeograficas(condition:{nivel:3}){
                                 nodes{id nombre abreviatura}
                             }
+                            listTipoAtencion:fnTblTipos(_codigo:"TP-ATN-SOC"){
+                                nodes{id valor descripcion}
+                            }
                         }`};
             const datos = await this.$axios.$post(`/graphql`, q)
             try {
                 this.listCiudad = datos.data.listDepartamento.nodes;
+                this.listTipoAtencion = datos.data.listTipoAtencion .nodes;
             } catch (error) {
                 console.log('Error', error)
             }
         },
         async fnMulticentro(){
-            const q = {query: `{listProvincia:allUbicacionGeograficas(condition:{nivel:4 dependienteId:"${this.agenda.ciudadId}"}){
-                                nodes{id nombre abreviatura}
-                                }}`};
+            const q = {query: `{listaMulticentro:fnPMulticentro(ciudadId:"${this.agenda.ciudadId}"){nodes{id direccion}}}`};
             const datos = await this.$axios.$post(`/graphql`, q)
             try {
-                this.listProvincia = datos.data.listProvincia.nodes;
+                this.listMulticentro = datos.data.listaMulticentro.nodes;
             } catch (error) {
                 console.log('Error', error)
             }

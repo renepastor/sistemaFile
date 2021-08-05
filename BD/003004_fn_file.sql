@@ -40,7 +40,14 @@ CREATE OR REPLACE FUNCTION base.add_simple_ilimitado(
   ciudad_id dllave,
   provincia_nuevo_id dllave,
   checkbox_pospago_ilimitado boolean,
-  numero_pospago text
+  numero_pospago text,
+  ciudad_atencion_id dllave,
+  multicentro_id dllave,
+  hora_propuesta dhora,
+  primer_numero text,
+  segundo_numero text,
+  tipo_atencion_id dllave
+
 ) returns text as $$
 DECLARE
 BEGIN
@@ -74,8 +81,15 @@ BEGIN
           ciudad_id,
           provincia_nuevo_id,
           checkbox_pospago_ilimitado,
-          numero_pospago)
-        VALUES(
+          numero_pospago,
+          ciudad_atencion_id,
+          multicentro_id,
+          hora_propuesta,
+          primer_numero,
+          segundo_numero,
+          tipo_atencion_id,
+          estado_solicitado
+       )VALUES(
           foto_ci,
           foto_factura,
           foto_referencia_financiera,
@@ -105,7 +119,14 @@ BEGIN
           ciudad_id,
           provincia_nuevo_id,
           checkbox_pospago_ilimitado,
-          numero_pospago
+          numero_pospago,
+          ciudad_atencion_id,
+          multicentro_id,
+          hora_propuesta,
+          primer_numero,
+          segundo_numero,
+          tipo_atencion_id,
+          'S'
         );
 
   IF found THEN
@@ -127,5 +148,55 @@ $$ language sql stable;
 COMMENT ON FUNCTION base.fn_p_multicentro(ciudad_id dllave) is 'Multicentros por ciudad';
 
 
+CREATE OR REPLACE FUNCTION base.add_agenda(
+  ciudad_id dllave,
+  servicio_id dllave,
+  registro_id dllave,
+  multicentro_id dllave,
+  tipo_atencion_id dllave,
+  hora_propuesta dhora,
+  primer_numero dtexto,
+  segundo_numero dtexto
+) returns text as $$
+DECLARE
+BEGIN
+  INSERT INTO files.agenda (servicio_id,registro_id,ciudad_id, multicentro_id, tipo_atencion_id, hora_propuesta, primer_numero, segundo_numero)
+  VALUES(servicio_id,registro_id,ciudad_id, multicentro_id, tipo_atencion_id, hora_propuesta, primer_numero, segundo_numero);
+  IF found THEN
+    return 'ok';
+  END IF;
+  return 'Por favor verifique los datos';
+END;
+$$ LANGUAGE plpgsql;
+COMMENT ON FUNCTION base.add_agenda(dllave, dllave, dllave, dllave, dllave, dhora, dtexto, dtexto) is 'Registrar en agenda';
+
+
+CREATE OR REPLACE FUNCTION files.new_usr_sol() RETURNS "trigger"
+    AS $$
+declare
+  _alias text:= COALESCE(NEW.nombres,'')||' '||COALESCE(NEW.apellido_paterno,'')||' '||COALESCE(NEW.apellido_materno,'');
+  _id_user dllave := 0;
+  _usuario base.usuario;
+begin
+--Sacamos el codigo del rubro
+  SELECT id INTO _id_user
+  FROM base.usuario
+  WHERE username = NEW.correo;
+  IF not found THEN
+     INSERT INTO base.usuario(username, clave, alias,correo, creado, creador)
+     VALUES (NEW.correo,crypt(NEW.nro_documento, gen_salt('bf')), _alias, NEW.correo, now(), NEW.correo) returning * into _usuario;
+     INSERT INTO base.usuario_rol(id_rol, id_usuario,creado, creador) VALUES(frol('SOL-SER'), _usuario.id, now(), _usuario.username);
+  END IF;
+  return NEW;
+end;
+$$
+LANGUAGE plpgsql;
+
+
+--DROP TRIGGER IF EXISTS tgg_new_usr_sol ON files.simple_ilimitado;-- [ CASCADE | RESTRICT ];
+
+CREATE TRIGGER tgg_new_usr_sol
+    BEFORE INSERT OR UPDATE ON files.simple_ilimitado
+    FOR EACH ROW EXECUTE PROCEDURE files.new_usr_sol();
 
 commit;

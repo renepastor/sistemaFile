@@ -20,7 +20,7 @@ create domain dentero4 as integer default 0;
 create domain dreal    as float not null;
 create domain dreal2   as float default -1000000.0;
 create domain dreal3   as float default 0.00;
-create domain dhora    as time not null;
+create domain dhora    as time;
 create domain dhora2   as time default now();
 create domain dfecha   as date not null;
 create domain dfecha2  as date;

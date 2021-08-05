@@ -8,9 +8,10 @@ export const mutations = {
     /**
      * Listando Tipo Cambio
      */
-    async lista(state, url) {
+    async lista(state, query) {
         try{
-            const lista = await this.$axios.$get(`${url}`)
+            const lista = await this.$axios.$post(`/graphql`, query)
+            //const lista = await this.$axios.$get(`${url}`)
             state.lista = lista.data;
         }catch(error){
             /*state.lista = [{

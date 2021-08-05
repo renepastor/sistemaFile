@@ -10,6 +10,7 @@ VALUES('10', 'FILES', 'FILES', 'ADMINISTRACION DE ARCHIVOS', 'ef8f55fa-8982-43c5
 -- rol
 INSERT INTO base.rol (id_aplicacion, codigo, nombre) VALUES (fsis('FILES'), 'SUPER', 'Superusuario');
 INSERT INTO base.rol (id_aplicacion, codigo, nombre) VALUES (fsis('FILES'), 'ADMIN', 'Administrador');
+INSERT INTO base.rol (id_aplicacion, codigo, nombre) VALUES (fsis('FILES'), 'SOL-SER', 'SOLICITANTE DE SERVICIO');
 INSERT INTO base.rol (id_aplicacion, codigo, nombre) VALUES (fsis('FILES'), 'ASIG-HORA', 'Asgna Hora y Fecha');
 INSERT INTO base.rol (id_aplicacion, codigo, nombre) VALUES (fsis('FILES'), 'VAL-FILE', 'Verificar Archivos');
 
@@ -20,6 +21,9 @@ INSERT INTO base.modulo (id_aplicacion,  posicion, nombre, icono) VALUES (fsis('
 
 -- RECURSOS
 --INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Configuración','ARGOS'), 6, 'Parametros', 'parametro', true, 'mdi-cogs');
+INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Administración','FILES'), 1, 'Solicitudes', 'solicitudes', true, 'mdi-folder-plus-outline');
+INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Administración','FILES'), 2, 'Perfil', 'perfil', true, 'mdi-folder-multiple-plus-outline');
+
 
 INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Administración','FILES'), 1, 'Asignar Hora', 'asignarHora', true, 'mdi-folder-plus-outline');
 INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Administración','FILES'), 2, 'Verificar Documentos', 'verificaDoc', true, 'mdi-folder-multiple-plus-outline');
@@ -27,6 +31,10 @@ INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALU
 INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Reportes','FILES'), 1, 'Documentos', 'documentos', true, 'mdi-chart-box-outline');
 
 -- permisos
+INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (frol('SOL-SER'), frecurso('Solicitudes'), true, false, false, false);
+INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (frol('SOL-SER'), frecurso('Perfil'), true, false, true, false);
+
+
 INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (frol('SUPER'), frecurso('Asignar Hora'), true, true, true, true);
 INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (frol('SUPER'), frecurso('Verificar Documentos'), true, true, true, true);
 INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (frol('SUPER'), frecurso('Documentos'), true, true, true, true);
@@ -152,6 +160,14 @@ INSERT INTO base.tbl_tipos(padre_id,codigo,valor,descripcion,ayuda,creador) VALU
 (ftptbl('PLAN-SIM-ILI'),'PLNA-','5','Simple 500','',1),
 (ftptbl('PLAN-SIM-ILI'),'PLNA-','100','Simple 750','',1);
 
+
+INSERT INTO base.tbl_tipos(padre_id,codigo,valor,descripcion,ayuda,creador) VALUES
+(ftptbl('--'),'TP-ATN-SOC','TP ATN SOC','TIPO DE ATENCION SOCIAL','',1);
+INSERT INTO base.tbl_tipos(padre_id,codigo,valor,descripcion,ayuda,creador) VALUES
+(ftptbl('TP-ATN-SOC'),'TP-ATN-SOC-1','1','ADULTO MAYOR','',1),
+(ftptbl('TP-ATN-SOC'),'TP-ATN-SOC-2','2','DISCAPACITADO','',1),
+(ftptbl('TP-ATN-SOC'),'TP-ATN-SOC-3','3','EMBARAZADA','',1),
+(ftptbl('TP-ATN-SOC'),'TP-ATN-SOC-4','4','NINGUNO','',1);
 
 
 -------******PROCESO******--

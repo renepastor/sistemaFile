@@ -1,221 +1,284 @@
 <template>
-    <v-app class="pa-2 full">
-        <v-card>
-            <div class="pa-2 my-1 headline grey lighten-2  text-center">
-                <h5>Simple Ilimitado Elección de Planes y Datos Personales</h5>
-            </div>
-            <val-obse ref="observer" v-slot="{ invalid }">
-                <v-container>
-                    <v-form @submit.prevent="guardarRegistro" ref="form" v-model="valid" lazy-validation dense>
-                        <v-row dense>
-                            <v-col cols="5" sm="5" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listPlan" v-model="simpleIlimitado.planId" item-text="descripcion" item-value="id" @change="inputPlanes" label="Elige tu Plan" :error-messages="errors" dense></v-select>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="7" sm="7" md="3">
-                                <v-text-field label="Numero celular" maxlength="8" v-model="telefonos" dense
-                                append-icon="mdi-phone-plus"
-                                @click:append="addTelefonosPlan"
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="12" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-textarea label="Numeros de celular" v-model="simpleIlimitado.telefonosPlanes" rows="1" readonly :error-messages="errors" dense></v-textarea>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listGenero" v-model="simpleIlimitado.generoId" item-text="descripcion" item-value="id" :error-messages="errors" dense label="Género"></v-select>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listEstadoCivil" v-model="simpleIlimitado.estadoCivilId" item-text="descripcion" item-value="id" :error-messages="errors" dense label="Estado Civil"></v-select>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="12" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field label="Nombre (s)" v-model="simpleIlimitado.nombres" :error-messages="errors" dense></v-text-field>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="12" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field label="Apellido Paterno" v-model="simpleIlimitado.apellidoPaterno" :error-messages="errors" dense></v-text-field>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="12" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field label="Apellido Materno" v-model="simpleIlimitado.apellidoMaterno" :error-messages="errors" dense></v-text-field>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="12" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field label="Apellido Marital" v-model="simpleIlimitado.apellidoMarital" :error-messages="errors" dense></v-text-field>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listTipoDocumento" v-model="simpleIlimitado.tipoDocumentoId" item-text="descripcion" item-value="id" label="Tipo de Documento" :error-messages="errors" dense></v-select>        
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field label="Número de Documento" v-model="simpleIlimitado.nroDocumento" :error-messages="errors" dense></v-text-field>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="4" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listExpedido" v-model="simpleIlimitado.expedicionId" item-text="nombre" item-value="id" label="Lugar de Expedición" :error-messages="errors" dense></v-select>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="4" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-menu v-model="fechaModal" :close-on-content-click="false" max-width="290px" min-width="auto">
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <v-text-field v-model="fechaFormat" label="Fecha de Nacimiento" v-bind="attrs" v-on="on" prepend-icon="mdi-calendar" :error-messages="errors" dense></v-text-field>
-                                        </template>
-                                        <v-date-picker v-model="simpleIlimitado.fechaNacimiento" @change="fechaModal = false" @input="fechaFormat = $moment(simpleIlimitado.fechaNacimiento ).format('DD/MM/YYYY')" no-title :error-messages="errors" dense></v-date-picker>
-                                    </v-menu>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="4" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field v-model="simpleIlimitado.correo" label="Correo Electrónico" :error-messages="errors" dense></v-text-field>
-                                </val-prov>
-                            </v-col>
-                        </v-row>
-                        <div class="pa-2 mb-4 headline grey lighten-2  text-center">
-                            <h6>Dirección</h6>
-                        </div>
-                        <v-row dense>
-                            <v-col cols="6" sm="4" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listDepartamento" label="Departamento - Ciudad" v-model="simpleIlimitado.departamentoPersomalId" @input="fnProvincia()" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="6" sm="4" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listProvincia" label="Provincia" v-model="simpleIlimitado.provinciaId" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="4" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field v-model="simpleIlimitado.zona" label="Zona / Barrio" :error-messages="errors" dense></v-text-field>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="4" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field v-model="simpleIlimitado.calleAvenida" label="Calle o Avenida"  :error-messages="errors" dense></v-text-field>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="6" sm="4" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listTipoVivienda" label="Tipo de Vivienda" v-model="simpleIlimitado.tipoViviendaId" item-text="descripcion" item-value="id" :error-messages="errors" dense></v-select>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="6" sm="4" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field v-model="simpleIlimitado.nroVivienda" label="Número de Vivienda"  :error-messages="errors" dense></v-text-field>    
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="4" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field v-model="simpleIlimitado.referencias" label="Referencias de la Dirección" :error-messages="errors" dense></v-text-field>    
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="6" sm="6" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field label="Numero de Celular de referencia" v-model="simpleIlimitado.celularRef" :error-messages="errors" dense></v-text-field>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="6" sm="6" md="3">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field label="Numero de Teléfono de referencia" v-model="simpleIlimitado.telefonoRef" :error-messages="errors" dense></v-text-field>
-                                </val-prov>
-                            </v-col>
-                        </v-row>
+    <v-list class="pa-2 full">
+        <val-obse ref="observer" v-slot="{ invalid }">
+            <v-form @submit.prevent="guardarRegistro" ref="form" v-model="valid" lazy-validation dense>
+                <v-list-group dense title="titulo 11" link :value="op1" class="mx-0 px-0 m-0 p-0 grey lighten-2">
+                    <template v-slot:activator>
+                        <v-list-item-title class="text-center">
+                            <h3>Simple Ilimitado Elección de Planes y Datos Personales</h3>
+                        </v-list-item-title>
+                    </template>
+                    <v-list-item dense class="white">
+                        <v-container>
+                            <v-row dense>
+                                <v-col cols="5" sm="5" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listPlan" v-model="simpleIlimitado.planId" item-text="descripcion" item-value="id" @change="inputPlanes" label="Elige tu Plan" :error-messages="errors" dense></v-select>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="7" sm="7" md="3">
+                                    <v-text-field label="Numero celular" maxlength="8" v-model="telefonos" dense
+                                    append-icon="mdi-phone-plus"
+                                    @click:append="addTelefonosPlan"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="12" md="6">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-textarea label="Numeros de celular" v-model="simpleIlimitado.telefonosPlanes" rows="1" readonly :error-messages="errors" dense></v-textarea>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listGenero" v-model="simpleIlimitado.generoId" item-text="descripcion" item-value="id" :error-messages="errors" dense label="Género"></v-select>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listEstadoCivil" v-model="simpleIlimitado.estadoCivilId" item-text="descripcion" item-value="id" :error-messages="errors" dense label="Estado Civil"></v-select>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="12" md="6">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field label="Nombre (s)" v-model="simpleIlimitado.nombres" :error-messages="errors" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="12" md="6">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field label="Apellido Paterno" v-model="simpleIlimitado.apellidoPaterno" :error-messages="errors" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="12" md="6">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field label="Apellido Materno" v-model="simpleIlimitado.apellidoMaterno" :error-messages="errors" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="12" md="6">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field label="Apellido Marital" v-model="simpleIlimitado.apellidoMarital" :error-messages="errors" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listTipoDocumento" v-model="simpleIlimitado.tipoDocumentoId" item-text="descripcion" item-value="id" label="Tipo de Documento" :error-messages="errors" dense></v-select>        
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field label="Número de Documento" v-model="simpleIlimitado.nroDocumento" :error-messages="errors" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="4" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listExpedido" v-model="simpleIlimitado.expedicionId" item-text="nombre" item-value="id" label="Lugar de Expedición" :error-messages="errors" dense></v-select>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="4" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-menu v-model="fechaModal" :close-on-content-click="false" max-width="290px" min-width="auto">
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-text-field v-model="fechaFormat" label="Fecha de Nacimiento" v-bind="attrs" v-on="on" prepend-icon="mdi-calendar" :error-messages="errors" dense></v-text-field>
+                                            </template>
+                                            <v-date-picker v-model="simpleIlimitado.fechaNacimiento" @change="fechaModal = false" @input="fechaFormat = $moment(simpleIlimitado.fechaNacimiento ).format('DD/MM/YYYY')" no-title :error-messages="errors" dense></v-date-picker>
+                                        </v-menu>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="4" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field v-model="simpleIlimitado.correo" label="Correo Electrónico" :error-messages="errors" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                            </v-row>
+                            <div class="pa-2 mb-4 headline grey lighten-2  text-center">
+                                <h6>Dirección</h6>
+                            </div>
+                            <v-row dense>
+                                <v-col cols="6" sm="4" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listDepartamento" label="Departamento - Ciudad" v-model="simpleIlimitado.departamentoPersomalId" @input="fnProvincia()" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="6" sm="4" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listProvincia" label="Provincia" v-model="simpleIlimitado.provinciaId" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="4" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field v-model="simpleIlimitado.zona" label="Zona / Barrio" :error-messages="errors" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="4" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field v-model="simpleIlimitado.calleAvenida" label="Calle o Avenida"  :error-messages="errors" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="6" sm="4" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listTipoVivienda" label="Tipo de Vivienda" v-model="simpleIlimitado.tipoViviendaId" item-text="descripcion" item-value="id" :error-messages="errors" dense></v-select>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="6" sm="4" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field v-model="simpleIlimitado.nroVivienda" label="Número de Vivienda"  :error-messages="errors" dense></v-text-field>    
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="4" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field v-model="simpleIlimitado.referencias" label="Referencias de la Dirección" :error-messages="errors" dense></v-text-field>    
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="6" sm="6" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field label="Numero de Celular de referencia" v-model="simpleIlimitado.celularRef" :error-messages="errors" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="6" sm="6" md="3">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field label="Numero de Teléfono de referencia" v-model="simpleIlimitado.telefonoRef" :error-messages="errors" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                            </v-row>
 
-                        <div class="pa-2 mb-4 headline grey lighten-2  text-center">
-                            <h6>Elección de nuevo número o migración a Pospago</h6>
-                        </div>
-                        <v-row dense>
-                            <v-col cols="12" sm="6" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listCiudad" label="Para que Ciudad requiere su Línea" v-model="simpleIlimitado.ciudadId" @input="fnProvinciaNuevo()" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listProvinciaNuevo" label="Provincia" v-model="simpleIlimitado.provinciaNuevoId" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-checkbox v-model="simpleIlimitado.checkboxPospagoIlimitado" label="¿Tiene una línea Entel que pasará a pospago Simple Ilimitado?" :error-messages="errors" dense></v-checkbox>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-text-field label="Numero de Teléfono que pasa a Pospago" v-model="simpleIlimitado.numeroPospago" :error-messages="errors" dense></v-text-field>
-                                </val-prov>
-                            </v-col>
-                        </v-row>
-                        
-                       <div class="pa-2 mb-4 headline grey lighten-2  text-center">
-                            <h6>Envío de Documentos</h6>
-                        </div>
-                        <v-row dense>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-file-input dense
-                                    @change="onFileCi"
-                                    accept="image/png, image/jpeg, image/bmp"
-                                    placeholder="Foto de documento de identificacion"
-                                    prepend-icon="mdi-camera"
-                                    label="Foto de su documento de identidad"
-                                ></v-file-input>
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <input type="hidden" v-model="simpleIlimitado.fotoCi" :error-messages="errors"/> 
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-file-input dense
-                                    @change="onFileFactura"
-                                    accept="image/png, image/jpeg, image/bmp"
-                                    placeholder="Foto de Factura se servicio básico"
-                                    prepend-icon="mdi-camera"
-                                    label="Foto de Factura se servicio básico"
-                                ></v-file-input>
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <input type="hidden" v-model="simpleIlimitado.fotoFactura" :error-messages="errors"/>
-                                </val-prov>
-                            </v-col>
-                            <v-col cols="12" sm="12" md="4" v-if="simpleIlimitado.referenciaFinanciera">
-                                <v-row dense>
-                                    <v-checkbox v-model="simpleIlimitado.referenciaFinanciera" @input="simpleIlimitado.referenciaFinanciera" dense></v-checkbox>
+                            <div class="pa-2 mb-4 headline grey lighten-2  text-center">
+                                <h6>Elección de nuevo número o migración a Pospago</h6>
+                            </div>
+                            <v-row dense>
+                                <v-col cols="12" sm="6" md="6">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listCiudad" label="Para que Ciudad requiere su Línea" v-model="simpleIlimitado.ciudadId" @input="fnProvinciaNuevo()" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listProvinciaNuevo" label="Provincia" v-model="simpleIlimitado.provinciaNuevoId" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-checkbox v-model="simpleIlimitado.checkboxPospagoIlimitado" label="¿Tiene una línea Entel que pasará a pospago Simple Ilimitado?" :error-messages="errors" dense></v-checkbox>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-text-field label="Numero de Teléfono que pasa a Pospago" v-model="simpleIlimitado.numeroPospago" :error-messages="errors" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                            </v-row>
+                            <div class="pa-2 mb-4 headline grey lighten-2  text-center">
+                                <h6>Envío de Documentos</h6>
+                            </div>
+                            <v-row dense>
+                                <v-col cols="12" sm="6" md="4">
                                     <v-file-input dense
-                                        @change="onFileRefFinanciero"
+                                        @change="onFileCi"
                                         accept="image/png, image/jpeg, image/bmp"
-                                        placeholder="Foto de su referencia financiera"
+                                        placeholder="Foto de documento de identificacion"
                                         prepend-icon="mdi-camera"
-                                        label="Foto de su referencia financiera"
+                                        label="Foto de su documento de identidad"
                                     ></v-file-input>
                                     <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                        <input type="hidden" v-model="simpleIlimitado.fotoReferenciaFinanciera" :error-messages="errors"/>
+                                        <input type="hidden" v-model="simpleIlimitado.fotoCi" :error-messages="errors"/> 
                                     </val-prov>
-                                </v-row>
-                            </v-col>
-
-                        </v-row>
-                        <v-divider></v-divider>
-                        <div class="text-center pa-2">
-                            <v-btn  :disabled="invalid" outlined type="submit" color="indigo">SERVICIOS</v-btn>
-                        </div>
-                    </v-form>
-                </v-container>
-            </val-obse>
-        </v-card>
-    </v-app>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-file-input dense
+                                        @change="onFileFactura"
+                                        accept="image/png, image/jpeg, image/bmp"
+                                        placeholder="Foto de Factura se servicio básico"
+                                        prepend-icon="mdi-camera"
+                                        label="Foto de Factura se servicio básico"
+                                    ></v-file-input>
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <input type="hidden" v-model="simpleIlimitado.fotoFactura" :error-messages="errors"/>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="12" md="4" v-if="simpleIlimitado.referenciaFinanciera">
+                                    <v-row dense>
+                                        <v-checkbox v-model="simpleIlimitado.referenciaFinanciera" @input="simpleIlimitado.referenciaFinanciera" dense></v-checkbox>
+                                        <v-file-input dense
+                                            @change="onFileRefFinanciero"
+                                            accept="image/png, image/jpeg, image/bmp"
+                                            placeholder="Foto de su referencia financiera"
+                                            prepend-icon="mdi-camera"
+                                            label="Foto de su referencia financiera"
+                                        ></v-file-input>
+                                        <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                            <input type="hidden" v-model="simpleIlimitado.fotoReferenciaFinanciera" :error-messages="errors"/>
+                                        </val-prov>
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+                            <v-divider></v-divider>
+                            <div class="text-center pa-2">
+                                <v-btn :disabled="invalid" outlined type="button" color="indigo" @click="fnSiguiente">Siguiente</v-btn>
+                            </div>
+                        </v-container>
+                    </v-list-item>
+                </v-list-group>
+                <v-list-group dense title="titulo 11" link :value="op2" class="mx-0 px-0 m-0 p-0 grey lighten-2">
+                    <template v-slot:activator>
+                        <v-list-item-title class="text-center">
+                            <h3>AGENDAR HORA</h3>
+                        </v-list-item-title>
+                    </template>
+                    <v-list-item dense class="white">
+                        <v-container>
+                            <v-row dense>
+                                <v-col cols="12" sm="6" md="6">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listCiudad" label="Para que Ciudad requiere su Línea" v-model="simpleIlimitado.ciudadAtencionId" @input="fnMulticentro()" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-select :items="listMulticentro" label="Multicenro mas cercano" v-model="simpleIlimitado.multicentroId" item-text="direccion" item-value="id" :error-messages="errors" dense></v-select>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="4" md="3">
+                                    <val-prov v-slot="{ errors }" name="Hora" rules="required">
+                                        <v-menu ref="menu" v-model="horaModal" offset-y :close-on-content-click="false">
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-text-field v-model="simpleIlimitado.horaPropuesta" label="Hora Propuesta de atencion" v-bind="attrs" v-on="on" append-icon="mdi-clock-time-four-outline" :error-messages="errors" dense></v-text-field>
+                                            </template>
+                                            <v-time-picker v-if="horaModal" v-model="simpleIlimitado.horaPropuesta" full-width  @click:minute="$refs.menu.save(simpleIlimitado.horaPropuesta)" no-title></v-time-picker>
+                                        </v-menu>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="4" md="4">
+                                    <val-prov v-slot="{ errors }" name="1° numero" rules="required">
+                                        <v-text-field label="1° Numeros de celular" v-model="simpleIlimitado.primerNumero" rows="1" :error-messages="errors" maxlength="8" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="4" md="4">
+                                    <val-prov v-slot="{ errors }" name="2° numero" rules="required">
+                                        <v-text-field label="2° Numeros de celular" v-model="simpleIlimitado.segundoNumero" rows="1" :error-messages="errors" maxlength="8" dense></v-text-field>
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="4" md="4">
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <v-radio-group label="Tipo Atencion Preferencial" v-model="simpleIlimitado.tipoAtencionId">
+                                            <v-radio dense
+                                                v-for="row in listTipoAtencion"
+                                                :key="row.id"
+                                                :label="`${row.descripcion}`"
+                                                :value="row.id"
+                                                :error-messages="errors"
+                                            ></v-radio>
+                                        </v-radio-group>
+                                    </val-prov>
+                                </v-col>
+                                
+                            </v-row>
+                            <v-divider></v-divider>
+                            <div class="text-center pa-2">
+                                <v-btn  :disabled="invalid" outlined type="submit" color="indigo">Guardar</v-btn>
+                            </div>
+                        </v-container>
+                    </v-list-item>
+                </v-list-group>
+            </v-form>
+        </val-obse>
+    </v-list>
 </template>
 <script>
 import { required, max } from 'vee-validate/dist/rules'
@@ -239,6 +302,8 @@ export default {
     data: () => ({
         date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         menu2: false,
+        op1:true,
+        op2:false,
         simpleIlimitado:{
             fotoCi:"",
             fotoFactura:"",
@@ -248,7 +313,8 @@ export default {
         checkbox: true,
         valid: true,
         fechaModal:false,
-        fechaFormat:'01/01/1990',
+        horaModal:false,
+        fechaFormat:'',
         disabled:false,
         accept:"*",
         file:'',
@@ -264,6 +330,8 @@ export default {
         listProvincia:[],
         listProvinciaNuevo:[],
         listTipoVivienda:[],
+        listMulticentro:[],
+        listTipoAtencion:[],
         rules: [
             value => !!value || 'Required.',
             value => (value && value.length >= 3) || 'Min 3 characters',
@@ -288,6 +356,12 @@ export default {
                 });
                 return resultFile.data.url;
             }
+        },
+        async fnSiguiente(evt){
+            evt.preventDefault()
+            console.log(this.simpleIlimitado)
+            this.op1=false;
+            this.op2=true;
         },
         async onFileCi(e){
             const fileUpload = await this.onFileChange(e)
@@ -320,6 +394,9 @@ export default {
                             listDepartamento:allUbicacionGeograficas(condition:{nivel:3}){
                                 nodes{id nombre abreviatura}
                             }
+                            listTipoAtencion:fnTblTipos(_codigo:"TP-ATN-SOC"){
+                                nodes{id valor descripcion}
+                            }
                         }`};
             const datos = await this.$axios.$post(`/graphql`, q)
             try {
@@ -332,6 +409,16 @@ export default {
                 this.listCiudad = datos.data.listDepartamento.nodes;
                 //this.listProvincia = datos.data..nodes;
                 this.listTipoVivienda = datos.data.listTipoVivi.nodes;
+                this.listTipoAtencion = datos.data.listTipoAtencion.nodes;
+            } catch (error) {
+                console.log('Error', error)
+            }
+        },
+        async fnMulticentro(){
+            const q = {query: `{listaMulticentro:fnPMulticentro(ciudadId:"${this.simpleIlimitado.ciudadAtencionId}"){nodes{id direccion}}}`};
+            const datos = await this.$axios.$post(`/graphql`, q)
+            try {
+                this.listMulticentro = datos.data.listaMulticentro.nodes;
             } catch (error) {
                 console.log('Error', error)
             }
@@ -421,7 +508,13 @@ export default {
                     ciudadId: "${this.simpleIlimitado.ciudadId}",
                     provinciaNuevoId: "${this.simpleIlimitado.provinciaNuevoId}",
                     checkboxPospagoIlimitado: ${this.simpleIlimitado.checkboxPospagoIlimitado},
-                    numeroPospago: "${this.simpleIlimitado.numeroPospago}"
+                    numeroPospago: "${this.simpleIlimitado.numeroPospago}",
+                    ciudadAtencionId: "${this.simpleIlimitado.ciudadAtencionId}",
+                    multicentroId: "${this.simpleIlimitado.multicentroId}",
+                    horaPropuesta: "${this.simpleIlimitado.horaPropuesta}",
+                    primerNumero: "${this.simpleIlimitado.primerNumero}",
+                    segundoNumero: "${this.simpleIlimitado.segundoNumero}",
+                    tipoAtencionId: "${this.simpleIlimitado.tipoAtencionId}"
                 }){
                     string
                 }
@@ -429,7 +522,7 @@ export default {
             const datos = await this.$axios.$post(`/graphql`, mut)
             try {
 
-                this.$store.commit('alert/ok', "Su solicitud ya fue registrada. Nuestro personal se contactara con usted")
+                this.$store.commit('alert/ok', `Su solicitud ya fue registrada. Nuestro personal se contactara mediante esta aplicacion, le sugerimos entre al sistema con su susuario: ${this.simpleIlimitado.correo} y contraseña temporal: ${this.simpleIlimitado.nroDocumento}`)
                 this.$router.push("/publico")
             } catch (error) {
                 this.$store.commit('alert/error', error+""+datos.message)
