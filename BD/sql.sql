@@ -426,63 +426,88 @@ SELECT ROW_NUMBER () OVER (ORDER BY rec.id) id,
 
 --create VIEW base.vw_simple_ilimitado AS
 --  SELECT * FROM files.simple_ilimitado;
+drop VIEW base.vw_simple_ilimitado;
+create VIEW base.vw_simple_ilimitado AS
+SELECT id, foto_ci, foto_factura, foto_referencia_financiera, referencia_financiera, telefonos_planes, nombres, apellido_paterno, apellido_materno, 
+apellido_marital, nro_documento, expedicion_id, fecha_nacimiento, correo,
+ zona, calle_avenida, tipo_vivienda_id, nro_vivienda, referencias, celular_ref, telefono_ref,  checkbox_pospago_ilimitado, numero_pospago, 
+ hora_propuesta, primer_numero, segundo_numero, estado_solicitado, fecha_programada, hora_programada, activo, creado, creador, editado, editor, mensaje, cliente_contactado,
+(select direccion from files.multicentros tt where tt.id = si.plan_id) plan, 
+(select descripcion from base.tbl_tipos tt where tt.id = si.genero_id) genero, 
+(select descripcion from base.tbl_tipos tt where tt.id = si.estado_civil_id) estado_civil,
+(select descripcion from base.tbl_tipos tt where tt.id = si.tipo_documento_id) tipo_documento,
+(select nombre from base.ubicacion_geografica ug where ug.id = si.expedicion_id) expedicion,
+(select nombre from base.ubicacion_geografica ug where ug.id = si.ciudad_atencion_id) ciudad_atencion,
+(select direccion from files.multicentros tt where tt.id = si.multicentro_id) multicentro,
+(select descripcion from base.tbl_tipos tt where tt.id = si.tipo_atencion_id) tipo_atencion,
+(select nombre from base.ubicacion_geografica ug where ug.id = si.departamento_persomal_id) departamento_persomal
+FROM files.simple_ilimitado si;
 
-CREATE OR REPLACE FUNCTION base.fn_simple_ilimitado() RETURNS SETOF files.simple_ilimitado AS $$
-  SELECT *
-  FROM files.simple_ilimitado
-  WHERE activo
-$$ language sql stable;
-COMMENT ON FUNCTION base.fn_simple_ilimitado() is 'Buscando Usuario en session';
 
-grant EXECUTE ON FUNCTION base.fn_simple_ilimitado() to protegido;
    
+   
+--drop  function base.fn_programar(p_id text, p_fecha_programada text, p_hora_programada text);
+--drop  function base.fn_programar(p_id dllave, p_fecha_programada text, p_hora_programada text);
+create or replace function base.fn_programar(p_id dllave, p_fecha_programada dfecha2, p_hora_programada dhora) returns text as $$
+declare
+  v_clave text;
+begin
+
+  UPDATE files.simple_ilimitado
+  SET
+     fecha_programada = p_fecha_programada,
+     hora_programada = p_hora_programada,
+     estado_solicitado = 'P'
+  WHERE id= p_id;
+  IF found THEN
+    return 'ok';
+  END IF;
+  return 'Por favor verifique los datos';
+end;
+$$ language plpgsql; -- strict security definer;
+
+
+--drop function base.fn_aprobar(p_id text,p_mensaje dtexto,p_cliente_contactado dbool);
+--drop function base.fn_aprobar(p_id dllave,p_mensaje dtexto,p_cliente_contactado dbool);
+create or replace function base.fn_aprobar(p_id dllave,p_mensaje dtexto,p_cliente_contactado dbool) returns text as $$
+declare
+  v_clave text;
+begin
+  UPDATE files.simple_ilimitado
+  SET
+     mensaje = p_mensaje,
+     cliente_contactado = p_cliente_contactado,
+     estado_solicitado = 'A'
+  WHERE id= p_id;
+  IF found THEN
+    return 'ok';
+  END IF;
+  return 'Por favor verifique los datos';
+end;
+$$ language plpgsql; -- strict security definer;
+
+--drop function base.fn_rechazar(p_id text, p_mensaje dtexto, p_cliente_contactado dbool);
+--drop function base.fn_rechazar(p_id dllave, p_mensaje dtexto, p_cliente_contactado dbool);
+create or replace function base.fn_rechazar(p_id dllave,p_mensaje dtexto,p_cliente_contactado dbool) returns text as $$
+declare
+  v_clave text;
+begin
+  UPDATE files.simple_ilimitado
+  SET
+     mensaje = p_mensaje,
+     cliente_contactado = p_cliente_contactado,
+     estado_solicitado = 'R'
+  WHERE id= p_id;
+  IF found THEN
+    return 'ok';
+  END IF;
+  return 'Por favor verifique los datos';
+end;
+$$ language plpgsql; -- strict security definer;
+
+--ALTER TABLE files.simple_ilimitado ADD COLUMN mensaje dtexto;
+--ALTER TABLE files.simple_ilimitado ADD COLUMN cliente_contactado dbool;
+
 
 commit;
-
-
-/*
-CREATE TABLE files. (
-    id bigserial primary key,
-    
-    activo dbool,
-    creado dfechahora,
-    creador dtexto,
-    editado dfechahora,
-    editor dtexto
-);
-
-
-CREATE TABLE files. (
-    id bigserial primary key,
-    
-    activo dbool,
-    creado dfechahora,
-    creador dtexto,
-    editado dfechahora,
-    editor dtexto
-);
-
-CREATE TABLE files. (
-    id bigserial primary key,
-    
-    activo dbool,
-    creado dfechahora,
-    creador dtexto,
-    editado dfechahora,
-    editor dtexto
-);
-
-
-CREATE TABLE files. (
-    id bigserial primary key,
-    
-    activo dbool,
-    creado dfechahora,
-    creador dtexto,
-    editado dfechahora,
-    editor dtexto
-);
-*/
-
-
 

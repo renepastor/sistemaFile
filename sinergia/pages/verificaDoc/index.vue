@@ -39,13 +39,11 @@
                     <td>{{ item.correo }} <b>{{ item.nroDocumento}}</b></td>
                     <td>{{ item.nombres }} {{item.apellidoPaterno}} {{item.apellidoPaterno }}</td>
                     <td>{{item.primerNumero}} ~ {{item.segundoNumero }}</td>
-                    <td>{{item.multicentroId}}</td>
-                    <td>{{item.ciudadAtencionId }}</td>
+                    <td>{{item.multicentro}}</td>
+                    <td>{{item.ciudadAtencion }}</td>
                     <td>{{item.horaPropuesta}}</td>
                     <td>
-                        <v-slide-group multiple show-arrows >
-                            <comp-edit :paramId="item.id" :title="title" ></comp-edit>
-                        </v-slide-group>
+                        <v-btn to="/verificaDoc/verificaDocumento" icon><v-icon>mdi-account-details</v-icon></v-btn>
                     </td>
                 </tr>
             </tbody>
@@ -91,7 +89,7 @@ export default {
     },
     methods:{
         async reformarLista(pg) {
-            const q = {query: `{allVwSimpleIlimitados(condition:{estadoSolicitado:"S"}) {
+            const q = {query: `{allVwSimpleIlimitados(condition:{estadoSolicitado:"P"}) {
                                     nodes {
                                         id
                                         correo
@@ -103,8 +101,8 @@ export default {
                                         apellidoPaterno
                                         calleAvenida
                                         nroDocumento
-                                        multicentroId
-                                        ciudadAtencionId
+                                        multicentro
+                                        ciudadAtencion
                                         horaPropuesta
                                     }}}`};
             this.$store.commit('reformarLista/lista', q)

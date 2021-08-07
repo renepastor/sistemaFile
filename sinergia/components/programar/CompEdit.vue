@@ -27,22 +27,22 @@
                                 </v-col>
                                 
                                 <v-col cols="12" sm="6" md="6">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Fecha Programada" rules="required">
                                         <v-menu v-model="fechaModal" :close-on-content-click="false" max-width="290px" min-width="auto">
                                             <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="fechaFormat" label="Fecha de Nacimiento" v-bind="attrs" v-on="on" append-icon="mdi-calendar" :error-messages="errors" dense></v-text-field>
+                                                <v-text-field v-model="fechaFormat" readonly required label="Fecha de Programada" v-bind="attrs" v-on="on" append-icon="mdi-calendar" :error-messages="errors" dense></v-text-field>
                                             </template>
                                             <v-date-picker v-model="agenda.fechaProgramada" @change="fechaModal = false" @input="fechaFormat = $moment(agenda.fechaProgramada ).format('DD/MM/YYYY')" no-title  :error-messages="errors" dense></v-date-picker>
                                         </v-menu>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="6">
-                                    <val-prov v-slot="{ errors }" name="Hora" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Hora programada" rules="required">
                                         <v-menu ref="menu" v-model="horaModal" offset-y :close-on-content-click="false">
                                             <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="agenda.horaProgramada" label="Hora Propuesta de atencion" v-bind="attrs" v-on="on" append-icon="mdi-clock-time-four-outline" :error-messages="errors" dense></v-text-field>
+                                                <v-text-field v-model="agenda.horaProgramada" readonly required label="Hora Propuesta de atencion" v-bind="attrs" v-on="on" append-icon="mdi-clock-time-four-outline" :error-messages="errors" dense></v-text-field>
                                             </template>
-                                            <v-time-picker v-if="horaModal" v-model="agenda.horaProgramada" full-width  @click:minute="$refs.menu.save(agenda.horaProgramada)" no-title></v-time-picker>
+                                            <v-time-picker v-if="horaModal" v-model="agenda.horaProgramada" @click:minute="$refs.menu.save(agenda.horaProgramada)" no-title></v-time-picker>
                                         </v-menu>
                                     </val-prov>
                                 </v-col>
@@ -56,6 +56,7 @@
                     <v-card-actions>
                         <small>*Datos requeridos</small>
                         <v-spacer></v-spacer>
+                        <v-btn color="primary" @click="dialog = false">Cancelar</v-btn>
                         <v-btn color="primary" type="submit" :disabled="invalid">
                             Guardar
                         </v-btn>
@@ -68,7 +69,7 @@
 
 
 <script>
-import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
+import { required, max } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
 setInteractionMode('eager')
 extend('required', {
@@ -90,6 +91,7 @@ export default {
         return {
             fechaModal:false,
             horaModal:false,
+            invalid:false,
             fechaFormat:'',
             valid: true,
             dialog: false,
@@ -121,18 +123,23 @@ export default {
                 this.$store.commit('alert/error', error.message)
             }
         },
-        async editRegistro(){
-            const materialGrupoRow = await this.$axios.$put(`/materialGrupo/${this.paramId}`,this.materialGrupo)
+        async editRegistro(evt){
+            this.$refs.observer.validate()
+            evt.preventDefault()
             try {
-                if(materialGrupoRow.success){
-                    this.materialGrupo = materialGrupoRow.data;
-                    this.$store.commit('reformarLista/lista', `/materialGrupo`)
-                    this.$store.commit('alert/ok', "EL Grupo de Material se modifico correctamente")
-                    this.dialog = false
+                if(this.agenda.horaProgramada && this.agenda.fechaProgramada){
+                    const q = {query: `mutation{
+                                            fnProgramar(input:{pId:"${this.paramId}" pHoraProgramada:"${this.agenda.horaProgramada}" pFechaProgramada:"${this.agenda.fechaProgramada}"}){
+                                                string
+                                            }
+                                            }`};
+                    const lista = await this.$axios.$post(`/graphql`, q)
+                    this.$store.commit('alert/ok', "Se a registrado la programacion")
+                    this.dialog = false;
+                    this.$router.push('/asignarHora')
                 }else{
-                    this.$store.commit('alert/error', materialGrupoRow.message)
+                    this.$store.commit('alert/error', "Fecha y hora son obligatorios")
                 }
-                
             } catch (error) {
                 this.$store.commit('alert/error', error.message)
             }

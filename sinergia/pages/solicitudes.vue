@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="title">{{title}}</h3>
+        <h3 class="title">Estado de Solicitudes</h3>
         <v-row><v-col cols="12" lg="6">
         <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false"
           transition="scale-transition"
@@ -30,7 +30,9 @@
                     <th class="text-center">Ciudad</th>
                     <th class="text-center">Multicentro</th>
                     <th class="text-center">Hora referencia</th>
-                    <th><comp-create :title="title" v-if="permiso.creacion"></comp-create></th>
+                    <th class="text-center">Mensaje</th>
+                    <th class="text-center">Fecha Hora Programada</th>
+                    <th class="text-center">Multicentro</th>
                 </tr>
             </thead>
             <tbody class="px-0">
@@ -42,11 +44,10 @@
                     <td>{{item.multicentro}}</td>
                     <td>{{item.ciudadAtencion }}</td>
                     <td>{{item.horaPropuesta}}</td>
-                    <td>
-                        <v-slide-group multiple show-arrows >
-                            <comp-edit :paramId="item.id" :title="title" ></comp-edit>
-                        </v-slide-group>
-                    </td>
+                    <td>{{item.mensaje}}</td>
+                    <td>{{item.fechaProgramada}} {{item.horaProgramada}}</td>
+                    <td>{{item.multicentro}}</td>
+
                 </tr>
             </tbody>
         </v-simple-table>
@@ -78,7 +79,7 @@ export default {
     middleware: 'auth',
     data () {
         return {
-            title:'Asignar Hora',
+            title:'Revisar Documento',
             lista: [],
             pagina:1,
             sig:this.pagina,
@@ -91,11 +92,14 @@ export default {
     },
     methods:{
         async reformarLista(pg) {
-            const q = {query: `{allVwSimpleIlimitados(condition:{estadoSolicitado:"S"}) {
+            const q = {query: `{allVwSimpleIlimitados(condition:{estadoSolicitado:"P"}) {
                                     nodes {
                                         id
                                         correo
                                         nombres
+                                        mensaje
+                                        fechaProgramada
+                                        horaProgramada
                                         primerNumero
                                         segundoNumero
                                         apellidoMarital

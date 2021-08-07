@@ -192,6 +192,8 @@ CREATE TABLE files.simple_ilimitado (
     estado_solicitado destado,
     fecha_programada dfecha2,
     hora_programada dhora,
+    mensaje dtexto,
+    cliente_contactado dbool,
     
     activo dbool,
     creado dfechahora,
@@ -201,7 +203,21 @@ CREATE TABLE files.simple_ilimitado (
 );
 
 create VIEW base.vw_simple_ilimitado AS
-  SELECT * FROM files.simple_ilimitado;
+SELECT id, foto_ci, foto_factura, foto_referencia_financiera, referencia_financiera, telefonos_planes, nombres, apellido_paterno, apellido_materno, 
+apellido_marital, nro_documento, expedicion_id, fecha_nacimiento, correo, 
+ zona, calle_avenida, tipo_vivienda_id, nro_vivienda, referencias, celular_ref, telefono_ref,  checkbox_pospago_ilimitado, numero_pospago, 
+ hora_propuesta, primer_numero, segundo_numero, estado_solicitado, fecha_programada, hora_programada, activo, creado, creador, editado, editor, mensaje, cliente_contactado,
+(select direccion from files.multicentros tt where tt.id = si.plan_id) plan, 
+(select descripcion from base.tbl_tipos tt where tt.id = si.genero_id) genero, 
+(select descripcion from base.tbl_tipos tt where tt.id = si.estado_civil_id) estado_civil,
+(select descripcion from base.tbl_tipos tt where tt.id = si.tipo_documento_id) tipo_documento,
+(select nombre from base.ubicacion_geografica ug where ug.id = si.expedicion_id) expedicion,
+(select nombre from base.ubicacion_geografica ug where ug.id = si.ciudad_atencion_id) ciudad_atencion,
+(select direccion from files.multicentros tt where tt.id = si.multicentro_id) multicentro,
+(select descripcion from base.tbl_tipos tt where tt.id = si.tipo_atencion_id) tipo_atencion,
+(select nombre from base.ubicacion_geografica ug where ug.id = si.departamento_persomal_id) departamento_persomal
+FROM files.simple_ilimitado si;
+
 
 commit;
 

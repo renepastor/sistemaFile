@@ -8,6 +8,71 @@ CREATE OR REPLACE FUNCTION base.fn_servicios() RETURNS SETOF files.servicios AS 
 $$ language sql stable;
 COMMENT ON FUNCTION base.fn_servicios() is 'Buscando Usuario en session';
 
+create or replace function base.fn_programar(
+  p_id dllave,
+  p_fecha_programada text,
+  p_hora_programada text
+) returns text as $$
+declare
+  v_clave text;
+begin
+
+  UPDATE files.simple_ilimitado
+  SET
+     fecha_programada = p_fecha_programada,
+     hora_programada = p_hora_programada,
+     estado_solicitado = 'P'
+  WHERE id= p_id;
+  IF found THEN
+    return 'ok';
+  END IF;
+  return 'Por favor verifique los datos';
+end;
+$$ language plpgsql; -- strict security definer;
+
+
+create or replace function base.fn_aprobar(
+  p_id dllave,
+  p_mensaje dtexto,
+  p_cliente_contactado dbool
+) returns text as $$
+declare
+  v_clave text;
+begin
+  UPDATE files.simple_ilimitado
+  SET
+     mensaje = p_mensaje,
+     cliente_contactado = p_cliente_contactado,
+     estado_solicitado = 'A'
+  WHERE id= p_id;
+  IF found THEN
+    return 'ok';
+  END IF;
+  return 'Por favor verifique los datos';
+end;
+$$ language plpgsql; -- strict security definer;
+
+create or replace function base.fn_rechazar(
+  p_id dllave,
+  p_mensaje dtexto,
+  p_cliente_contactado dbool
+) returns text as $$
+declare
+  v_clave text;
+begin
+  UPDATE files.simple_ilimitado
+  SET
+     mensaje = p_mensaje,
+     cliente_contactado = p_cliente_contactado,
+     estado_solicitado = 'R'
+  WHERE id= p_id;
+  IF found THEN
+    return 'ok';
+  END IF;
+  return 'Por favor verifique los datos';
+end;
+$$ language plpgsql; -- strict security definer;
+
 
 
 CREATE OR REPLACE FUNCTION base.add_simple_ilimitado(
