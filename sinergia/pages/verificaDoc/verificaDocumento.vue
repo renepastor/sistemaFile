@@ -321,7 +321,9 @@ export default {
     },
     methods:{
         async reformarLista(pg) {
-            const q = {query: `{allVwSimpleIlimitados(condition:{estadoSolicitado:"P"}) {
+            var URLactual = this.$route.fullPath;
+            var arrayUri = URLactual.split("?");
+            const q = {query: `{allVwSimpleIlimitados(condition:{estadoSolicitado:"P" id:"${arrayUri[1]}"}) {
                                     nodes {
                                         id
                                         correo

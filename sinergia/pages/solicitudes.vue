@@ -92,7 +92,10 @@ export default {
     },
     methods:{
         async reformarLista(pg) {
-            const q = {query: `{allVwSimpleIlimitados(condition:{estadoSolicitado:"P"}) {
+            const query = {"query": `query{miUsuario{mail:username id alias}}`};
+            const user = await this.$axios.$post(`/graphql`, query);
+            console.log("lllll",  process.env.API_KEY)
+            const q = {query: `{allVwSimpleIlimitados(condition:{ correo:"${user.data.miUsuario.mail}"}) {
                                     nodes {
                                         id
                                         correo

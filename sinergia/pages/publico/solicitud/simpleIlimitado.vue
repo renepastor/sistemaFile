@@ -1,5 +1,5 @@
 <template>
-    <v-list class="pa-2 full">
+    <v-list class="pa-2">
         <val-obse ref="observer" v-slot="{ invalid }">
             <v-form @submit.prevent="guardarRegistro" ref="form" v-model="valid" lazy-validation dense>
                 <v-list-group dense title="titulo 11" link :value="op1" class="mx-0 px-0 m-0 p-0 grey lighten-2">
@@ -17,43 +17,45 @@
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="7" sm="7" md="3">
-                                    <v-text-field label="Numero celular" maxlength="8" v-model="telefonos" dense
-                                    append-icon="mdi-phone-plus"
-                                    @click:append="addTelefonosPlan"
-                                    ></v-text-field>
+                                    <val-prov v-slot="{ errors }" name="Números favoritos" :rules="{required: true, digits: 8, regex: '^(7|6)\\d{7}$'}">
+                                        <v-text-field label="Número favorito" maxlength="8" v-model="telefonos" dense
+                                        append-icon="mdi-phone-plus" :error-messages="errors"
+                                        @click:append="addTelefonosPlan"
+                                        ></v-text-field>
+                                    </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                        <v-textarea label="Numeros de celular" v-model="simpleIlimitado.telefonosPlanes" rows="1" readonly :error-messages="errors" dense></v-textarea>
+                                    <val-prov v-slot="{ errors }" name="Nro. Favorito" rules="required">
+                                        <v-textarea label="Número favoritos" v-model="simpleIlimitado.telefonosPlanes" rows="1" readonly :error-messages="errors" dense></v-textarea>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Genero" rules="required">
                                         <v-select :items="listGenero" v-model="simpleIlimitado.generoId" item-text="descripcion" item-value="id" :error-messages="errors" dense label="Género"></v-select>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Estado Civil" rules="required">
                                         <v-select :items="listEstadoCivil" v-model="simpleIlimitado.estadoCivilId" item-text="descripcion" item-value="id" :error-messages="errors" dense label="Estado Civil"></v-select>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Nombre" rules="required">
                                         <v-text-field label="Nombre (s)" v-model="simpleIlimitado.nombres" :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                        <v-text-field label="Apellido Paterno" v-model="simpleIlimitado.apellidoPaterno" :error-messages="errors" dense></v-text-field>
+                                    <val-prov v-slot="{ errors }" name="Apellido paterno" rules="required">
+                                        <v-text-field label="Apellido Paterno" v-model="simpleIlimitado.apellidoPaterno" :error-messages="errors" required dense></v-text-field>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Apellido Materno" rules="">
                                         <v-text-field label="Apellido Materno" v-model="simpleIlimitado.apellidoMaterno" :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
-                                <v-col cols="12" sm="12" md="6">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                <v-col cols="12" sm="12" md="6" v-if="simpleIlimitado.generoId == 3">
+                                    <val-prov v-slot="{ errors }" name="Apellido Marital" rules="">
                                         <v-text-field label="Apellido Marital" v-model="simpleIlimitado.apellidoMarital" :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
@@ -83,7 +85,7 @@
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="4" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Correo" rules="required|email">
                                         <v-text-field v-model="simpleIlimitado.correo" label="Correo Electrónico" :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
@@ -93,47 +95,47 @@
                             </div>
                             <v-row dense>
                                 <v-col cols="6" sm="4" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Departamento" rules="required">
                                         <v-select :items="listDepartamento" label="Departamento - Ciudad" v-model="simpleIlimitado.departamentoPersomalId" @input="fnProvincia()" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="6" sm="4" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Provincia" rules="required">
                                         <v-select :items="listProvincia" label="Provincia" v-model="simpleIlimitado.provinciaId" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="4" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Zona o Barrio" rules="required">
                                         <v-text-field v-model="simpleIlimitado.zona" label="Zona / Barrio" :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="4" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Calle o Avenida" rules="required">
                                         <v-text-field v-model="simpleIlimitado.calleAvenida" label="Calle o Avenida"  :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="6" sm="4" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Tipo de Vivienda" rules="required">
                                         <v-select :items="listTipoVivienda" label="Tipo de Vivienda" v-model="simpleIlimitado.tipoViviendaId" item-text="descripcion" item-value="id" :error-messages="errors" dense></v-select>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="6" sm="4" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Numero de Vivienda" rules="required">
                                         <v-text-field v-model="simpleIlimitado.nroVivienda" label="Número de Vivienda"  :error-messages="errors" dense></v-text-field>    
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="4" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Referencia " rules="required">
                                         <v-text-field v-model="simpleIlimitado.referencias" label="Referencias de la Dirección" :error-messages="errors" dense></v-text-field>    
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="6" sm="6" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Nro. referencia" :rules="{required: true, digits: 8, regex: '^(7|6)\\d{7}$'}">
                                         <v-text-field label="Numero de Celular de referencia" v-model="simpleIlimitado.celularRef" :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="6" sm="6" md="3">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Nro. telefono ref." :rules="{required: true, digits: 7, regex: '^(2|3|4)\\d{6}$'}">
                                         <v-text-field label="Numero de Teléfono de referencia" v-model="simpleIlimitado.telefonoRef" :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
@@ -144,22 +146,22 @@
                             </div>
                             <v-row dense>
                                 <v-col cols="12" sm="6" md="6">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Ciudad" rules="required">
                                         <v-select :items="listCiudad" label="Para que Ciudad requiere su Línea" v-model="simpleIlimitado.ciudadId" @input="fnProvinciaNuevo()" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="6">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Provincia" rules="required">
                                         <v-select :items="listProvinciaNuevo" label="Provincia" v-model="simpleIlimitado.provinciaNuevoId" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="6">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                    <val-prov v-slot="{ errors }" name="Linea ENTEL" rules="">
                                         <v-checkbox v-model="simpleIlimitado.checkboxPospagoIlimitado" label="¿Tiene una línea Entel que pasará a pospago Simple Ilimitado?" :error-messages="errors" dense></v-checkbox>
                                     </val-prov>
                                 </v-col>
-                                <v-col cols="12" sm="6" md="6">
-                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                <v-col cols="12" sm="6" md="6" v-if="simpleIlimitado.checkboxPospagoIlimitado">
+                                    <val-prov v-slot="{ errors }" name="Nro. pospago" :rules="{required: true, digits: 7, regex: '^(71|72|74|76|81|82|84|85|86|87|88|89)\\d{5}$'}">
                                         <v-text-field label="Numero de Teléfono que pasa a Pospago" v-model="simpleIlimitado.numeroPospago" :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
@@ -226,7 +228,7 @@
                             <v-row dense>
                                 <v-col cols="12" sm="6" md="6">
                                     <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                        <v-select :items="listCiudad" label="Para que Ciudad requiere su Línea" v-model="simpleIlimitado.ciudadAtencionId" @input="fnMulticentro()" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
+                                        <v-select :items="listCiudad" label="¿En qué ciudad firmará en contrato?" v-model="simpleIlimitado.ciudadAtencionId" @input="fnMulticentro()" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="6">
@@ -281,17 +283,30 @@
     </v-list>
 </template>
 <script>
-import { required, max } from 'vee-validate/dist/rules'
+import { required, max, email, digits, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
 setInteractionMode('eager')
 extend('required', {
     ...required,
     message: '{_field_} no puede ser nulo',
 })
+extend('digits', {
+    ...digits,
+    message: '{_field_} nro. no validos',
+})
+extend('regex', {
+    ...regex,
+    message: '{_field_} no valido',
+})
 
 extend('max', {
     ...max,
     message: '{_field_} no puede ser mayor a {length} caracteres',
+})
+
+extend('email', {
+    ...email,
+    message: '{_field_} No es un correo valido',
 })
 
 export default {
@@ -461,17 +476,21 @@ export default {
             }
         },
         async addTelefonosPlan(){
-            if(this.telefonos.length == 8){
+            if(this.telefonos.length == 8 && this.telefonos >= 60000000 && this.telefonos <80000000){
                 var conComas = [];
                 if(this.simpleIlimitado.telefonosPlanes != undefined){
                     conComas = this.simpleIlimitado.telefonosPlanes.toString().split(", ");
                 }
                 console.log(this.nroInputPlan, conComas.length,this.telefonos)
-                if((this.nroInputPlan - 1) >= conComas.length){
+                if((this.nroInputPlan) >= conComas.length){
                     conComas.push(this.telefonos);
                     this.simpleIlimitado.telefonosPlanes = conComas.join(", ");
                     this.telefonos = "";
+                }else{
+                    this.$store.commit('alert/error', `Solo es permitido ${this.nroInputPlan} números`)
                 }
+            }else{
+                this.$store.commit('alert/error', "Número no valido")
             }
         },
         async guardarRegistro(evt){

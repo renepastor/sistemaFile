@@ -43,7 +43,7 @@
                     <td>{{item.ciudadAtencion }}</td>
                     <td>{{item.horaPropuesta}}</td>
                     <td>
-                        <v-btn to="/verificaDoc/verificaDocumento" icon><v-icon>mdi-account-details</v-icon></v-btn>
+                        <v-btn :to="'/verificaDoc/verificaDocumento?'+item.id" icon><v-icon>mdi-account-details</v-icon></v-btn>
                     </td>
                 </tr>
             </tbody>

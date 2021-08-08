@@ -119,6 +119,7 @@ export default {
                 this.$store.commit('reformarLista/lista', q)
                 const lista = await this.$axios.$post(`/graphql`, q)
                 this.agenda = lista.data.allVwSimpleIlimitados.nodes[0]
+                
             } catch (error) {
                 this.$store.commit('alert/error', error.message)
             }
@@ -134,6 +135,23 @@ export default {
                                             }
                                             }`};
                     const lista = await this.$axios.$post(`/graphql`, q)
+                    const ql = {query: `{allVwSimpleIlimitados(condition:{estadoSolicitado:"S"}) {
+                                    nodes {
+                                        id
+                                        correo
+                                        nombres
+                                        primerNumero
+                                        segundoNumero
+                                        apellidoMarital
+                                        apellidoMaterno
+                                        apellidoPaterno
+                                        calleAvenida
+                                        nroDocumento
+                                        multicentro
+                                        ciudadAtencion
+                                        horaPropuesta
+                                    }}}`};
+                    this.$store.commit('reformarLista/lista', ql)
                     this.$store.commit('alert/ok', "Se a registrado la programacion")
                     this.dialog = false;
                     this.$router.push('/asignarHora')

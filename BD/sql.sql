@@ -432,6 +432,7 @@ SELECT id, foto_ci, foto_factura, foto_referencia_financiera, referencia_financi
 apellido_marital, nro_documento, expedicion_id, fecha_nacimiento, correo,
  zona, calle_avenida, tipo_vivienda_id, nro_vivienda, referencias, celular_ref, telefono_ref,  checkbox_pospago_ilimitado, numero_pospago, 
  hora_propuesta, primer_numero, segundo_numero, estado_solicitado, fecha_programada, hora_programada, activo, creado, creador, editado, editor, mensaje, cliente_contactado,
+ si.multicentro_id, si.ciudad_atencion_id,
 (select direccion from files.multicentros tt where tt.id = si.plan_id) plan, 
 (select descripcion from base.tbl_tipos tt where tt.id = si.genero_id) genero, 
 (select descripcion from base.tbl_tipos tt where tt.id = si.estado_civil_id) estado_civil,

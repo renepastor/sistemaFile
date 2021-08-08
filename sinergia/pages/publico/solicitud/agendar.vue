@@ -10,12 +10,12 @@
                         <v-row dense>
 
                             <v-col cols="12" sm="6" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                    <v-select :items="listCiudad" label="Para que Ciudad requiere su Línea" v-model="agenda.ciudadId" @input="fnMulticentro()" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
+                                <val-prov v-slot="{ errors }" name="Ciudad" rules="required">
+                                    <v-select :items="listCiudad" label="¿En qué ciudad firmará en contrato?" v-model="agenda.ciudadId" @input="fnMulticentro()" item-text="nombre" item-value="id" :error-messages="errors" dense></v-select>
                                 </val-prov>
                             </v-col>
                             <v-col cols="12" sm="6" md="6">
-                                <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                <val-prov v-slot="{ errors }" name="Multicentro" rules="required">
                                     <v-select :items="listMulticentro" label="Multicenro mas cercano" v-model="agenda.multicentroId" item-text="direccion" item-value="id" :error-messages="errors" dense></v-select>
                                 </val-prov>
                             </v-col>
@@ -52,7 +52,6 @@
                                     </v-radio-group>
                                 </val-prov>
                             </v-col>
-                            
                         </v-row>
                         <v-divider></v-divider>
                         <div class="text-center pa-2">
