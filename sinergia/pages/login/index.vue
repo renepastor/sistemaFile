@@ -102,7 +102,7 @@ export default {
                 var q = {query:`mutation{auth(input:{pClave:"${this.usuario.pClave}",pUsuario:"${this.usuario.pUsuario}"}) {jwt}}`};
                 const response = await this.$auth.loginWith('local', {data: q});
                 const REDIRECT_URI =  this.$route.query.redirect || process.env.URL_DEFAULT;
-                this.$router.push(REDIRECT_URI)
+                this.$router.push('/home')
                 this.$store.dispatch('snackbar/setSnackbar', { color: 'teal', text: `Gracias por iniciar sesión, ${response.data.data.fullName} ` })
                 this.listarMenu();
             } catch (err) {

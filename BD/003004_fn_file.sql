@@ -204,13 +204,17 @@ $$ LANGUAGE plpgsql;
 --COMMENT ON FUNCTION base.edit_clave(text,text)
 --is 'Modificar clave del usuario';
 
+
+
 CREATE OR REPLACE FUNCTION base.fn_p_multicentro(ciudad_id dllave) RETURNS SETOF files.multicentros AS $$
-  SELECT *
+  SELECT id, ciudad_id, nombre, (nombre||' - '||direccion)::dtexto direccion, coordenada, activo, creado, creador, editado, editor
   FROM files.multicentros
   WHERE activo
   AND ciudad_id = $1
 $$ language sql stable;
+
 COMMENT ON FUNCTION base.fn_p_multicentro(ciudad_id dllave) is 'Multicentros por ciudad';
+
 
 
 CREATE OR REPLACE FUNCTION base.add_agenda(

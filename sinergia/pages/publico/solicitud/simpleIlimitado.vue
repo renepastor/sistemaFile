@@ -1,5 +1,5 @@
 <template>
-    <v-list class="pa-2">
+    <v-list class="pa-2 full">
         <val-obse ref="observer" v-slot="{ invalid }">
             <v-form @submit.prevent="guardarRegistro" ref="form" v-model="valid" lazy-validation dense>
                 <v-list-group dense title="titulo 11" link :value="op1" class="mx-0 px-0 m-0 p-0 grey lighten-2">
@@ -13,11 +13,13 @@
                             <v-row dense>
                                 <v-col cols="5" sm="5" md="3">
                                     <val-prov v-slot="{ errors }" name="Almacen" rules="required">
-                                        <v-select :items="listPlan" v-model="simpleIlimitado.planId" item-text="descripcion" item-value="id" @change="inputPlanes" label="Elige tu Plan" :error-messages="errors" dense></v-select>
+                                        <v-select :items="listPlan" v-model="simpleIlimitado.planId" 
+                                        item-text="descripcion" item-value="id" @change="inputPlanes"
+                                        label="Elige tu Plan" :error-messages="errors" dense></v-select>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="7" sm="7" md="3">
-                                    <val-prov v-slot="{ errors }" name="Números favoritos" :rules="{required: true, digits: 8, regex: '^(7|6)\\d{7}$'}">
+                                    <val-prov v-slot="{ errors }" name="Números favoritos" :rules="{ digits: 8, regex: '^(7|6)\\d{7}$'}">
                                         <v-text-field label="Número favorito" maxlength="8" v-model="telefonos" dense
                                         append-icon="mdi-phone-plus" :error-messages="errors"
                                         @click:append="addTelefonosPlan"
@@ -25,8 +27,10 @@
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <val-prov v-slot="{ errors }" name="Nro. Favorito" rules="required">
-                                        <v-textarea label="Número favoritos" v-model="simpleIlimitado.telefonosPlanes" rows="1" readonly :error-messages="errors" dense></v-textarea>
+                                    <val-prov v-slot="{ errors }" name="Nro. Favorito" rules="">
+                                        <v-textarea label="Número favoritos" v-model="simpleIlimitado.telefonosPlanes" rows="1" 
+                                        @click:append="deleteTelefonosPlan" append-icon="mdi-phone-minus"
+                                        readonly :error-messages="errors" dense></v-textarea>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
@@ -78,9 +82,14 @@
                                     <val-prov v-slot="{ errors }" name="Almacen" rules="required">
                                         <v-menu v-model="fechaModal" :close-on-content-click="false" max-width="290px" min-width="auto">
                                             <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="fechaFormat" label="Fecha de Nacimiento" v-bind="attrs" v-on="on" prepend-icon="mdi-calendar" :error-messages="errors" dense></v-text-field>
+                                                <v-text-field v-model="fechaFormat" label="Fecha de Nacimiento" readonly v-bind="attrs" v-on="on" prepend-icon="mdi-calendar" :error-messages="errors" dense></v-text-field>
                                             </template>
-                                            <v-date-picker v-model="simpleIlimitado.fechaNacimiento" @change="fechaModal = false" @input="fechaFormat = $moment(simpleIlimitado.fechaNacimiento ).format('DD/MM/YYYY')" no-title :error-messages="errors" dense></v-date-picker>
+                                            <v-date-picker v-model="simpleIlimitado.fechaNacimiento" 
+                                                :max="fecNacimientoMax" 
+                                                @change="fechaModal = false"
+                                                locale="bo-es"
+                                                @input="fechaFormat = $moment(simpleIlimitado.fechaNacimiento ).format('DD/MM/YYYY')" 
+                                                no-title :error-messages="errors" dense></v-date-picker>
                                         </v-menu>
                                     </val-prov>
                                 </v-col>
@@ -131,12 +140,12 @@
                                 </v-col>
                                 <v-col cols="6" sm="6" md="3">
                                     <val-prov v-slot="{ errors }" name="Nro. referencia" :rules="{required: true, digits: 8, regex: '^(7|6)\\d{7}$'}">
-                                        <v-text-field label="Numero de Celular de referencia" v-model="simpleIlimitado.celularRef" :error-messages="errors" dense></v-text-field>
+                                        <v-text-field label="Numero de Celular de referencia" v-model="simpleIlimitado.celularRef" maxlength="8" :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="6" sm="6" md="3">
-                                    <val-prov v-slot="{ errors }" name="Nro. telefono ref." :rules="{required: true, digits: 7, regex: '^(2|3|4)\\d{6}$'}">
-                                        <v-text-field label="Numero de Teléfono de referencia" v-model="simpleIlimitado.telefonoRef" :error-messages="errors" dense></v-text-field>
+                                    <val-prov v-slot="{ errors }" name="Nro. telefono ref." :rules="{digits: 8, regex: '^(2|3|4)\\d{7}$'}">
+                                        <v-text-field label="Numero de Teléfono de referencia" v-model="simpleIlimitado.telefonoRef" maxlength="8" :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
                             </v-row>
@@ -162,7 +171,7 @@
                                 </v-col>
                                 <v-col cols="12" sm="6" md="6" v-if="simpleIlimitado.checkboxPospagoIlimitado">
                                     <val-prov v-slot="{ errors }" name="Nro. pospago" :rules="{required: true, digits: 7, regex: '^(71|72|74|76|81|82|84|85|86|87|88|89)\\d{5}$'}">
-                                        <v-text-field label="Numero de Teléfono que pasa a Pospago" v-model="simpleIlimitado.numeroPospago" :error-messages="errors" dense></v-text-field>
+                                        <v-text-field label="Numero de Celular que pasa a Pospago" v-model="simpleIlimitado.numeroPospago" :error-messages="errors" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
                             </v-row>
@@ -240,20 +249,20 @@
                                     <val-prov v-slot="{ errors }" name="Hora" rules="required">
                                         <v-menu ref="menu" v-model="horaModal" offset-y :close-on-content-click="false">
                                             <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="simpleIlimitado.horaPropuesta" label="Hora Propuesta de atencion" v-bind="attrs" v-on="on" append-icon="mdi-clock-time-four-outline" :error-messages="errors" dense></v-text-field>
+                                                <v-text-field v-model="simpleIlimitado.horaPropuesta" readonly locale="bo-es" label="Hora Propuesta de atencion" v-bind="attrs" v-on="on" append-icon="mdi-clock-time-four-outline" :error-messages="errors" dense></v-text-field>
                                             </template>
-                                            <v-time-picker v-if="horaModal" v-model="simpleIlimitado.horaPropuesta" full-width  @click:minute="$refs.menu.save(simpleIlimitado.horaPropuesta)" no-title></v-time-picker>
+                                            <v-time-picker v-if="horaModal" v-model="simpleIlimitado.horaPropuesta" min="08:00" max="19:00" @click:minute="$refs.menu.save(simpleIlimitado.horaPropuesta)" no-title></v-time-picker>
                                         </v-menu>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="4" md="4">
-                                    <val-prov v-slot="{ errors }" name="1° numero" rules="required">
-                                        <v-text-field label="1° Numeros de celular" v-model="simpleIlimitado.primerNumero" rows="1" :error-messages="errors" maxlength="8" dense></v-text-field>
+                                    <val-prov v-slot="{ errors }" name="1° numero" :rules="{required: true, digits: 8, regex: '^(7|6)\\d{7}$'}">
+                                        <v-text-field label="1° Numeros de celular" v-model="simpleIlimitado.primerNumero"  :error-messages="errors" maxlength="8" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="4" md="4">
-                                    <val-prov v-slot="{ errors }" name="2° numero" rules="required">
-                                        <v-text-field label="2° Numeros de celular" v-model="simpleIlimitado.segundoNumero" rows="1" :error-messages="errors" maxlength="8" dense></v-text-field>
+                                    <val-prov v-slot="{ errors }" name="2° numero" :rules="{digits: 8, regex: '^(7|6)\\d{7}$'}">
+                                        <v-text-field label="2° Numeros de celular" v-model="simpleIlimitado.segundoNumero" :error-messages="errors" maxlength="8" dense></v-text-field>
                                     </val-prov>
                                 </v-col>
                                 <v-col cols="12" sm="4" md="4">
@@ -314,48 +323,54 @@ export default {
         'val-prov':ValidationProvider,
         'val-obse':ValidationObserver,
     },
-    data: () => ({
-        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        menu2: false,
-        op1:true,
-        op2:false,
-        simpleIlimitado:{
-            fotoCi:"",
-            fotoFactura:"",
-            fotoReferenciaFinanciera:"",
-            referenciaFinanciera:false
-        },
-        checkbox: true,
-        valid: true,
-        fechaModal:false,
-        horaModal:false,
-        fechaFormat:'',
-        disabled:false,
-        accept:"*",
-        file:'',
-        telefonos:'',
-        listPlan:[],
-        nroInputPlan:'',
-        listGenero:[],
-        listEstadoCivil:[],
-        listTipoDocumento:[],
-        listExpedido:[],
-        listDepartamento:[],
-        listCiudad:[],
-        listProvincia:[],
-        listProvinciaNuevo:[],
-        listTipoVivienda:[],
-        listMulticentro:[],
-        listTipoAtencion:[],
-        rules: [
-            value => !!value || 'Required.',
-            value => (value && value.length >= 3) || 'Min 3 characters',
-        ],
-    }),
+    data () {
+        return {
+            date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+            menu2: false,
+            op1:true,
+            op2:false,
+            simpleIlimitado:{
+                fotoCi:"",
+                fotoFactura:"",
+                fotoReferenciaFinanciera:"",
+                referenciaFinanciera:false,
+                fechaNacimiento: this.$moment().add(-18, 'y').format("YYYY-MM-DD")
+            },
+            checkbox: true,
+            valid: true,
+            fechaModal:false,
+            horaModal:false,
+            fechaFormat: this.$moment().add(-18, 'y').format("DD/MM/YYYY"),
+            disabled:false,
+            accept:"*",
+            file:'',
+            telefonos:'',
+            listPlan:[],
+            nroInputPlan:'',
+            listGenero:[],
+            listEstadoCivil:[],
+            listTipoDocumento:[],
+            listExpedido:[],
+            listDepartamento:[],
+            listCiudad:[],
+            listProvincia:[],
+            listProvinciaNuevo:[],
+            listTipoVivienda:[],
+            listMulticentro:[],
+            listTipoAtencion:[],
+            fecNacimientoMax : this.$moment().add(-18, 'y').format("YYYY-MM-DD"),
+            rules: [
+                value => !!value || 'Required.',
+                value => (value && value.length >= 3) || 'Min 3 characters',
+            ],
+        }
+    },
     auth: false,
     prefetchLinks: false,
     async created(){
         this.datosIniciales()
+        
+        console.log("######",this.$moment().format("YYYY-MM-DD"))
     },
     methods:{
         async onFileChange(e){
@@ -481,7 +496,6 @@ export default {
                 if(this.simpleIlimitado.telefonosPlanes != undefined){
                     conComas = this.simpleIlimitado.telefonosPlanes.toString().split(", ");
                 }
-                console.log(this.nroInputPlan, conComas.length,this.telefonos)
                 if((this.nroInputPlan) >= conComas.length){
                     conComas.push(this.telefonos);
                     this.simpleIlimitado.telefonosPlanes = conComas.join(", ");
@@ -492,6 +506,16 @@ export default {
             }else{
                 this.$store.commit('alert/error', "Número no valido")
             }
+        },
+        async deleteTelefonosPlan(){
+            console.log("-----####--", this.simpleIlimitado.telefonosPlanes)
+            this.simpleIlimitado.telefonosPlanes = "";
+            console.log("-----####22--", this.simpleIlimitado.telefonosPlanes)
+            return false;
+        },
+        isNull(val, defaul=""){
+            if(val===null || val===undefined) val = defaul;
+            return val;
         },
         async guardarRegistro(evt){
             evt.preventDefault()
@@ -509,7 +533,7 @@ export default {
                     nombres: "${this.simpleIlimitado.nombres}",
                     apellidoPaterno: "${this.simpleIlimitado.apellidoPaterno}",
                     apellidoMaterno: "${this.simpleIlimitado.apellidoMaterno}",
-                    apellidoMarital: "${this.simpleIlimitado.apellidoMarital}",
+                    apellidoMarital: "${this.isNull(this.simpleIlimitado.apellidoMarital)}",
                     tipoDocumentoId: "${this.simpleIlimitado.tipoDocumentoId}",
                     nroDocumento: "${this.simpleIlimitado.nroDocumento}",
                     expedicionId: "${this.simpleIlimitado.expedicionId}",
@@ -526,13 +550,13 @@ export default {
                     telefonoRef: "${this.simpleIlimitado.telefonoRef}",
                     ciudadId: "${this.simpleIlimitado.ciudadId}",
                     provinciaNuevoId: "${this.simpleIlimitado.provinciaNuevoId}",
-                    checkboxPospagoIlimitado: ${this.simpleIlimitado.checkboxPospagoIlimitado},
-                    numeroPospago: "${this.simpleIlimitado.numeroPospago}",
+                    checkboxPospagoIlimitado: ${this.isNull(this.simpleIlimitado.checkboxPospagoIlimitado,false)},
+                    numeroPospago: "${this.isNull(this.simpleIlimitado.numeroPospago)}",
                     ciudadAtencionId: "${this.simpleIlimitado.ciudadAtencionId}",
                     multicentroId: "${this.simpleIlimitado.multicentroId}",
                     horaPropuesta: "${this.simpleIlimitado.horaPropuesta}",
                     primerNumero: "${this.simpleIlimitado.primerNumero}",
-                    segundoNumero: "${this.simpleIlimitado.segundoNumero}",
+                    segundoNumero: "${this.isNull(this.simpleIlimitado.segundoNumero)}",
                     tipoAtencionId: "${this.simpleIlimitado.tipoAtencionId}"
                 }){
                     string
@@ -540,9 +564,12 @@ export default {
             }`};
             const datos = await this.$axios.$post(`/graphql`, mut)
             try {
-
-                this.$store.commit('alert/ok', `Su solicitud ya fue registrada. Nuestro personal se contactara mediante esta aplicacion, le sugerimos entre al sistema con su susuario: ${this.simpleIlimitado.correo} y contraseña temporal: ${this.simpleIlimitado.nroDocumento}`)
-                this.$router.push("/publico")
+                if(datos.errors){
+                    this.$store.commit('alert/error', datos.errors.message)
+                }else{
+                    this.$store.commit('alert/ok', `Su solicitud ya fue registrada. Nuestro personal se contactara mediante esta aplicacion, le sugerimos entre al sistema con su susuario: ${this.simpleIlimitado.correo} y contraseña temporal: ${this.simpleIlimitado.nroDocumento}`)
+                    this.$router.push("/")
+                }
             } catch (error) {
                 this.$store.commit('alert/error', error+""+datos.message)
             }

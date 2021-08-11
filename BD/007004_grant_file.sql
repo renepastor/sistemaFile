@@ -24,6 +24,7 @@ begin;
    grant INSERT ON files.simple_ilimitado to protegido;
    grant all ON base.usuario_rol to protegido;
    grant all ON base.usuario to protegido;
+   grant SELECT ON base.rol to protegido;
    GRANT USAGE ON SEQUENCE base.usuario_id_seq TO protegido;
    GRANT USAGE ON SEQUENCE base.usuario_rol_id_seq TO protegido;
    GRANT USAGE ON SEQUENCE files.simple_ilimitado_id_seq TO protegido;

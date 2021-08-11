@@ -37,10 +37,10 @@
                 <tr v-for="(item, i) in listaReformada.allVwSimpleIlimitados?listaReformada.allVwSimpleIlimitados.nodes:[]" :key="i" :class="(i%2 != 0)? 'over' :''">
                     <td>{{ i+1  }}</td>
                     <td>{{ item.correo }} <b>{{ item.nroDocumento}}</b></td>
-                    <td>{{ item.nombres }} {{item.apellidoPaterno}} {{item.apellidoPaterno }}</td>
+                    <td>{{ item.nombres }} {{item.apellidoPaterno}} {{item.apellidoMaterno }}</td>
                     <td>{{item.primerNumero}} ~ {{item.segundoNumero }}</td>
-                    <td>{{item.multicentro}}</td>
                     <td>{{item.ciudadAtencion }}</td>
+                    <td>{{item.multicentro}} </td>
                     <td>{{item.horaPropuesta}}</td>
                     <td>
                         <v-slide-group multiple show-arrows >

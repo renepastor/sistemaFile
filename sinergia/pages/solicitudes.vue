@@ -2,23 +2,7 @@
     <div>
         <h3 class="title">Estado de Solicitudes</h3>
         <v-row><v-col cols="12" lg="6">
-        <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          max-width="290px"
-          min-width="auto">
-                <v-date-picker v-model="dates" range no-title @input="menu1 = false"></v-date-picker>
-                <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                        v-model="dateRangeText"
-                        label="Rango de fecha"
-                        prepend-icon="mdi-calendar"
-                        v-bind="attrs"
-                        v-on="on"
-                        readonly
-                    ></v-text-field>
-                </template>
-        </v-menu>
+        
         </v-col></v-row>
         <v-simple-table dense fixed-header height="500px" class="lista">
             <thead>
@@ -39,7 +23,7 @@
                 <tr v-for="(item, i) in listaReformada.allVwSimpleIlimitados?listaReformada.allVwSimpleIlimitados.nodes:[]" :key="i" :class="(i%2 != 0)? 'over' :''">
                     <td>{{ i+1  }}</td>
                     <td>{{ item.correo }} <b>{{ item.nroDocumento}}</b></td>
-                    <td>{{ item.nombres }} {{item.apellidoPaterno}} {{item.apellidoPaterno }}</td>
+                    <td>{{ item.nombres }} {{item.apellidoPaterno}} {{item.apellidoMaterno }}</td>
                     <td>{{item.primerNumero}} ~ {{item.segundoNumero }}</td>
                     <td>{{item.multicentro}}</td>
                     <td>{{item.ciudadAtencion }}</td>

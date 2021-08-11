@@ -32,7 +32,7 @@
                                             <template v-slot:activator="{ on, attrs }">
                                                 <v-text-field v-model="fechaFormat" readonly required label="Fecha de Programada" v-bind="attrs" v-on="on" append-icon="mdi-calendar" :error-messages="errors" dense></v-text-field>
                                             </template>
-                                            <v-date-picker v-model="agenda.fechaProgramada" @change="fechaModal = false" @input="fechaFormat = $moment(agenda.fechaProgramada ).format('DD/MM/YYYY')" no-title  :error-messages="errors" dense></v-date-picker>
+                                            <v-date-picker v-model="agenda.fechaProgramada"  locale="bo-es" :min="minFecha" @change="fechaModal = false" @input="fechaFormat = $moment(agenda.fechaProgramada ).format('DD/MM/YYYY')" no-title  :error-messages="errors" dense></v-date-picker>
                                         </v-menu>
                                     </val-prov>
                                 </v-col>
@@ -40,9 +40,9 @@
                                     <val-prov v-slot="{ errors }" name="Hora programada" rules="required">
                                         <v-menu ref="menu" v-model="horaModal" offset-y :close-on-content-click="false">
                                             <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="agenda.horaProgramada" readonly required label="Hora Propuesta de atencion" v-bind="attrs" v-on="on" append-icon="mdi-clock-time-four-outline" :error-messages="errors" dense></v-text-field>
+                                                <v-text-field v-model="agenda.horaProgramada" readonly required label="Hora Programada de atención" v-bind="attrs" v-on="on" append-icon="mdi-clock-time-four-outline" :error-messages="errors" dense></v-text-field>
                                             </template>
-                                            <v-time-picker v-if="horaModal" v-model="agenda.horaProgramada" @click:minute="$refs.menu.save(agenda.horaProgramada)" no-title></v-time-picker>
+                                            <v-time-picker v-if="horaModal" v-model="agenda.horaProgramada"  locale="bo-es" min="08:00" max="19:00" @click:minute="$refs.menu.save(agenda.horaProgramada)" no-title></v-time-picker>
                                         </v-menu>
                                     </val-prov>
                                 </v-col>
@@ -92,10 +92,13 @@ export default {
             fechaModal:false,
             horaModal:false,
             invalid:false,
-            fechaFormat:'',
+            fechaFormat: this.$moment().format("DD/MM/YYYY"),
             valid: true,
             dialog: false,
-            agenda:{}
+            agenda:{
+                fechaProgramada:this.$moment().format("YYYY-MM-DD")
+            },
+            minFecha: this.$moment().format("YYYY-MM-DD")
         }
     },
     methods:{
@@ -116,7 +119,6 @@ export default {
                                         ciudadAtencionId
                                         horaPropuesta
                                     }}}`};
-                this.$store.commit('reformarLista/lista', q)
                 const lista = await this.$axios.$post(`/graphql`, q)
                 this.agenda = lista.data.allVwSimpleIlimitados.nodes[0]
                 
