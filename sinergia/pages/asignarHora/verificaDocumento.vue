@@ -223,7 +223,7 @@
         <v-row no-gutters>
                 <v-col cols="12" sm="6" md="6">
                     <div class="text-center pa-2">
-                        <comp-aprobar :paramId="revision.id" :datosRow="revision"></comp-aprobar>
+                        <comp-programar :paramId="revision.id" :datosRow="revision"></comp-programar>
                     </div>
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
@@ -235,11 +235,11 @@
     </v-card>
 </template>
 <script>
-import compAprobar from '@/components/programar/CompAprobar'
+import compProgramar from '@/components/programar/CompProgramar'
 import compRechazar from '@/components/programar/CompRechazar'
 export default {
     components:{
-        'comp-aprobar':compAprobar,
+        'comp-programar':compProgramar,
         'comp-rechazar':compRechazar,
     },
     data () {
@@ -269,7 +269,7 @@ export default {
         async reformarLista(pg) {
             var URLactual = this.$route.fullPath;
             var arrayUri = URLactual.split("?");
-            const q = {query: `{allVwSimpleIlimitados(condition:{estadoSolicitado:"P" id:"${arrayUri[1]}"}) {
+            const q = {query: `{allVwSimpleIlimitados(condition:{estadoSolicitado:"S" id:"${arrayUri[1]}"}) {
                                     nodes {
                                         id
                                         correo

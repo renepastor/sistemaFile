@@ -193,6 +193,18 @@
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
                                     <v-file-input dense
+                                        @change="onFileCi2"
+                                        accept="image/png, image/jpeg, image/bmp"
+                                        placeholder="Reverso Foto de documento de identificacion"
+                                        prepend-icon="mdi-camera"
+                                        label="Reverso de su documento de identidad"
+                                    ></v-file-input>
+                                    <val-prov v-slot="{ errors }" name="Almacen" rules="required">
+                                        <input type="hidden" v-model="simpleIlimitado.fotoCi2" :error-messages="errors"/> 
+                                    </val-prov>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-file-input dense
                                         @change="onFileFactura"
                                         accept="image/png, image/jpeg, image/bmp"
                                         placeholder="Foto de Factura se servicio básico"
@@ -331,6 +343,7 @@ export default {
             op2:false,
             simpleIlimitado:{
                 fotoCi:"",
+                fotoCi2:"",
                 fotoFactura:"",
                 fotoReferenciaFinanciera:"",
                 referenciaFinanciera:false,
@@ -369,8 +382,6 @@ export default {
     prefetchLinks: false,
     async created(){
         this.datosIniciales()
-        
-        console.log("######",this.$moment().format("YYYY-MM-DD"))
     },
     methods:{
         async onFileChange(e){
@@ -396,6 +407,10 @@ export default {
         async onFileCi(e){
             const fileUpload = await this.onFileChange(e)
             this.simpleIlimitado.fotoCi = fileUpload;
+        },
+        async onFileCi2(e){
+            const fileUpload = await this.onFileChange(e)
+            this.simpleIlimitado.fotoCi2 = fileUpload;
         },
         async onFileFactura(e){
             const fileUpload = await this.onFileChange(e)
@@ -523,6 +538,7 @@ export default {
             var mut ={query: `mutation{addSimpleIlimitado(input:
                 {
                     fotoCi: "${this.simpleIlimitado.fotoCi}",
+                    fotoCi2: "${this.simpleIlimitado.fotoCi2}",
                     fotoFactura: "${this.simpleIlimitado.fotoFactura}",
                     fotoReferenciaFinanciera: "${this.simpleIlimitado.fotoReferenciaFinanciera}",
                     referenciaFinanciera: ${this.simpleIlimitado.referenciaFinanciera},

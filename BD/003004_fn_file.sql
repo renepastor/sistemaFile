@@ -8,17 +8,21 @@ CREATE OR REPLACE FUNCTION base.fn_servicios() RETURNS SETOF files.servicios AS 
 $$ language sql stable;
 COMMENT ON FUNCTION base.fn_servicios() is 'Buscando Usuario en session';
 
-create or replace function base.fn_programar(
+
+create or replace function base.fn_pogramar(
   p_id dllave,
-  p_fecha_programada text,
-  p_hora_programada text
+  p_mensaje dtexto,
+  p_cliente_contactado dbool,
+  p_fecha_programada dfecha2,
+  p_hora_programada dhora
 ) returns text as $$
 declare
   v_clave text;
 begin
-
   UPDATE files.simple_ilimitado
   SET
+     mensaje = p_mensaje,
+     cliente_contactado = p_cliente_contactado,
      fecha_programada = p_fecha_programada,
      hora_programada = p_hora_programada,
      estado_solicitado = 'P'
@@ -34,7 +38,9 @@ $$ language plpgsql; -- strict security definer;
 create or replace function base.fn_aprobar(
   p_id dllave,
   p_mensaje dtexto,
-  p_cliente_contactado dbool
+  p_cliente_contactado dbool,
+  p_fecha_programada dfecha2,
+  p_hora_programada dhora
 ) returns text as $$
 declare
   v_clave text;
@@ -43,6 +49,8 @@ begin
   SET
      mensaje = p_mensaje,
      cliente_contactado = p_cliente_contactado,
+     fecha_programada = p_fecha_programada,
+     hora_programada = p_hora_programada,
      estado_solicitado = 'A'
   WHERE id= p_id;
   IF found THEN
@@ -51,6 +59,8 @@ begin
   return 'Por favor verifique los datos';
 end;
 $$ language plpgsql; -- strict security definer;
+
+
 
 create or replace function base.fn_rechazar(
   p_id dllave,
@@ -77,6 +87,7 @@ $$ language plpgsql; -- strict security definer;
 
 CREATE OR REPLACE FUNCTION base.add_simple_ilimitado(
   foto_ci text,
+  foto_ci2 text,
   foto_factura text,
   foto_referencia_financiera text,
   referencia_financiera boolean,
@@ -118,6 +129,7 @@ DECLARE
 BEGIN
         INSERT INTO files.simple_ilimitado (
           foto_ci,
+          foto_ci2,
           foto_factura,
           foto_referencia_financiera,
           referencia_financiera,
@@ -156,6 +168,7 @@ BEGIN
           estado_solicitado
        )VALUES(
           foto_ci,
+          foto_ci2,
           foto_factura,
           foto_referencia_financiera,
           referencia_financiera,

@@ -2,23 +2,6 @@
     <div>
         <h3 class="title">{{title}}</h3>
         <v-row><v-col cols="12" lg="6">
-        <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          max-width="290px"
-          min-width="auto">
-                <v-date-picker v-model="dates" range no-title @input="menu1 = false"></v-date-picker>
-                <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                        v-model="dateRangeText"
-                        label="Rango de fecha"
-                        prepend-icon="mdi-calendar"
-                        v-bind="attrs"
-                        v-on="on"
-                        readonly
-                    ></v-text-field>
-                </template>
-        </v-menu>
         </v-col></v-row>
         <v-simple-table dense fixed-header height="500px" class="lista">
             <thead>

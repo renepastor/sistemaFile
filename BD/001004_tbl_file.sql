@@ -153,6 +153,7 @@ SELECT * FROM files.requisitos_servicios;
 CREATE TABLE files.simple_ilimitado (
     id bigserial primary key,
     foto_ci dtexto,
+    foto_ci2 dtexto,
     foto_factura dtexto,
     foto_referencia_financiera dtexto,
     referencia_financiera dbool,
@@ -202,13 +203,32 @@ CREATE TABLE files.simple_ilimitado (
     editor dtexto
 );
 
+/*
 create VIEW base.vw_simple_ilimitado AS
-SELECT id, foto_ci, foto_factura, foto_referencia_financiera, referencia_financiera, telefonos_planes, nombres, apellido_paterno, apellido_materno, 
+SELECT id, foto_ci, foto_ci2, foto_factura, foto_referencia_financiera, referencia_financiera, telefonos_planes, nombres, apellido_paterno, apellido_materno, 
 apellido_marital, nro_documento, expedicion_id, fecha_nacimiento, correo, 
  zona, calle_avenida, tipo_vivienda_id, nro_vivienda, referencias, celular_ref, telefono_ref,  checkbox_pospago_ilimitado, numero_pospago, 
  hora_propuesta, primer_numero, segundo_numero, estado_solicitado, fecha_programada, hora_programada, activo, creado, creador, editado, editor, mensaje, cliente_contactado,
 (select direccion from files.multicentros tt where tt.id = si.plan_id) plan, 
 (select descripcion from base.tbl_tipos tt where tt.id = si.genero_id) genero, 
+(select descripcion from base.tbl_tipos tt where tt.id = si.estado_civil_id) estado_civil,
+(select descripcion from base.tbl_tipos tt where tt.id = si.tipo_documento_id) tipo_documento,
+(select nombre from base.ubicacion_geografica ug where ug.id = si.expedicion_id) expedicion,
+(select nombre from base.ubicacion_geografica ug where ug.id = si.ciudad_atencion_id) ciudad_atencion,
+(select direccion from files.multicentros tt where tt.id = si.multicentro_id) multicentro_direccion,
+(select nombre from files.multicentros tt where tt.id = si.multicentro_id) multicentro,
+(select descripcion from base.tbl_tipos tt where tt.id = si.tipo_atencion_id) tipo_atencion,
+(select nombre from base.ubicacion_geografica ug where ug.id = si.departamento_persomal_id) departamento_persomal
+FROM files.simple_ilimitado si;
+*/
+
+create VIEW base.vw_simple_ilimitado AS
+SELECT id, foto_ci, foto_ci2, foto_factura, foto_referencia_financiera, referencia_financiera, telefonos_planes, nombres, apellido_paterno, apellido_materno, 
+apellido_marital, nro_documento, expedicion_id, fecha_nacimiento, correo, 
+ zona, calle_avenida, tipo_vivienda_id, nro_vivienda, referencias, celular_ref, telefono_ref,  checkbox_pospago_ilimitado, numero_pospago, 
+ hora_propuesta, primer_numero, segundo_numero, estado_solicitado, fecha_programada, hora_programada, activo, creado, creador, editado, editor, mensaje, cliente_contactado,
+(select descripcion from base.tbl_tipos tt where tt.id = si.plan_id) plan, 
+(select descripcion from base.tbl_tipos tt where tt.id = si.genero_id) genero,
 (select descripcion from base.tbl_tipos tt where tt.id = si.estado_civil_id) estado_civil,
 (select descripcion from base.tbl_tipos tt where tt.id = si.tipo_documento_id) tipo_documento,
 (select nombre from base.ubicacion_geografica ug where ug.id = si.expedicion_id) expedicion,

@@ -513,12 +513,12 @@ $$ language plpgsql; -- strict security definer;
 
 drop VIEW base.vw_simple_ilimitado;
 create VIEW base.vw_simple_ilimitado AS
-SELECT id, foto_ci, foto_factura, foto_referencia_financiera, referencia_financiera, telefonos_planes, nombres, apellido_paterno, apellido_materno, 
+SELECT id, foto_ci, foto_ci2, foto_factura, foto_referencia_financiera, referencia_financiera, telefonos_planes, nombres, apellido_paterno, apellido_materno, 
 apellido_marital, nro_documento, expedicion_id, fecha_nacimiento, correo, 
  zona, calle_avenida, tipo_vivienda_id, nro_vivienda, referencias, celular_ref, telefono_ref,  checkbox_pospago_ilimitado, numero_pospago, 
  hora_propuesta, primer_numero, segundo_numero, estado_solicitado, fecha_programada, hora_programada, activo, creado, creador, editado, editor, mensaje, cliente_contactado,
-(select direccion from files.multicentros tt where tt.id = si.plan_id) plan, 
-(select descripcion from base.tbl_tipos tt where tt.id = si.genero_id) genero, 
+(select descripcion from base.tbl_tipos tt where tt.id = si.plan_id) plan, 
+(select descripcion from base.tbl_tipos tt where tt.id = si.genero_id) genero,
 (select descripcion from base.tbl_tipos tt where tt.id = si.estado_civil_id) estado_civil,
 (select descripcion from base.tbl_tipos tt where tt.id = si.tipo_documento_id) tipo_documento,
 (select nombre from base.ubicacion_geografica ug where ug.id = si.expedicion_id) expedicion,
@@ -528,7 +528,7 @@ apellido_marital, nro_documento, expedicion_id, fecha_nacimiento, correo,
 (select descripcion from base.tbl_tipos tt where tt.id = si.tipo_atencion_id) tipo_atencion,
 (select nombre from base.ubicacion_geografica ug where ug.id = si.departamento_persomal_id) departamento_persomal
 FROM files.simple_ilimitado si;
-
+/*
 CREATE OR REPLACE FUNCTION base.fn_p_multicentro(ciudad_id dllave) RETURNS SETOF files.multicentros AS $$
   SELECT id, ciudad_id, nombre, (nombre||' - '||direccion)::dtexto direccion, coordenada, activo, creado, creador, editado, editor
   FROM files.multicentros
@@ -538,6 +538,75 @@ $$ language sql stable;
 
 
 grant SELECT ON base.rol to protegido;
-
+*/
 commit;
+
+
+create or replace function base.fn_programar(
+  p_id dllave,
+  p_mensaje dtexto,
+  p_cliente_contactado dbool,
+  p_fecha_programada dfecha2,
+  p_hora_programada dhora
+) returns text as $$
+declare
+  v_clave text;
+begin
+  UPDATE files.simple_ilimitado
+  SET
+     mensaje = p_mensaje,
+     cliente_contactado = p_cliente_contactado,
+     fecha_programada = p_fecha_programada,
+     hora_programada = p_hora_programada,
+     estado_solicitado = 'P'
+  WHERE id= p_id;
+  IF found THEN
+    return 'ok';
+  END IF;
+  return 'Por favor verifique los datos';
+end;
+$$ language plpgsql; -- strict security definer;
+
+
+drop function base.fn_aprobar(
+  p_id dllave,
+  p_mensaje dtexto,
+  p_cliente_contactado dbool,
+  text, text
+);
+create or replace function base.fn_aprobar(
+  p_id dllave,
+  p_mensaje dtexto,
+  p_cliente_contactado dbool,
+  p_fecha_programada dfecha2,
+  p_hora_programada dhora
+) returns text as $$
+declare
+  v_clave text;
+begin
+  UPDATE files.simple_ilimitado
+  SET
+     mensaje = p_mensaje,
+     cliente_contactado = p_cliente_contactado,
+     fecha_programada = p_fecha_programada,
+     hora_programada = p_hora_programada,
+     estado_solicitado = 'A'
+  WHERE id= p_id;
+  IF found THEN
+    return 'ok';
+  END IF;
+  return 'Por favor verifique los datos';
+end;
+$$ language plpgsql; -- strict security definer;
+
+/*
+INSERT INTO base.rol (id_aplicacion, codigo, nombre) VALUES (fsis('FILES'), 'SOL-SER', 'Solicitante de Servicios');
+
+INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Administración','FILES'), 3, 'Solicitudes', 'solicitudes', true, 'mdi-folder-multiple-plus-outline');
+INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Administración','FILES'), 4, 'Perfil de Usuario', 'perfil', true, 'mdi-card-account-details');
+
+INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (frol('SOL-SER'), frecurso('Solicitudes'), true, true, true, true);
+INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (frol('SOL-SER'), frecurso('Perfil de Usuario'), true, true, true, true);
+*/
+
 

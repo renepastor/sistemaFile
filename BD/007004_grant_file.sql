@@ -30,6 +30,7 @@ begin;
    GRANT USAGE ON SEQUENCE files.simple_ilimitado_id_seq TO protegido;
    grant EXECUTE ON FUNCTION base.add_simple_ilimitado(
   foto_ci text,
+  foto_ci2 text,
   foto_factura text,
   foto_referencia_financiera text,
   referencia_financiera boolean,

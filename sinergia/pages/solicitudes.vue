@@ -1,52 +1,95 @@
 <template>
     <div>
-        <h3 class="title">Estado de Solicitudes</h3>
+        <h3 class="title">Mis Solicitudes</h3>
         <v-row><v-col cols="12" lg="6">
         
         </v-col></v-row>
-        <v-simple-table dense fixed-header height="500px" class="lista">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th class="text-center">Correo/Doc. Identidad</th>
-                    <th class="text-center">Nombre</th>
-                    <th class="text-center">Numero de Contacto</th>
-                    <th class="text-center">Ciudad</th>
-                    <th class="text-center">Multicentro</th>
-                    <th class="text-center">Hora referencia</th>
-                    <th class="text-center">Mensaje</th>
-                    <th class="text-center">Fecha Hora Programada</th>
-                    <th class="text-center">Multicentro</th>
-                </tr>
-            </thead>
-            <tbody class="px-0">
-                <tr v-for="(item, i) in listaReformada.allVwSimpleIlimitados?listaReformada.allVwSimpleIlimitados.nodes:[]" :key="i" :class="(i%2 != 0)? 'over' :''">
-                    <td>{{ i+1  }}</td>
-                    <td>{{ item.correo }} <b>{{ item.nroDocumento}}</b></td>
-                    <td>{{ item.nombres }} {{item.apellidoPaterno}} {{item.apellidoMaterno }}</td>
-                    <td>{{item.primerNumero}} ~ {{item.segundoNumero }}</td>
-                    <td>{{item.multicentro}}</td>
-                    <td>{{item.ciudadAtencion }}</td>
-                    <td>{{item.horaPropuesta}}</td>
-                    <td>{{item.mensaje}}</td>
-                    <td>{{item.fechaProgramada}} {{item.horaProgramada}}</td>
-                    <td>{{item.multicentro}}</td>
 
-                </tr>
-            </tbody>
-        </v-simple-table>
-
-        <div>
-            <v-container class="max-width" dense>
-                <v-pagination
-                v-model="pagina"
-                :pagina="listaReformada.number + 1"
-                class="my-0"
-                :length="listaReformada.totalPages"
-                @input="reformarLista($event)"
-                ></v-pagination>
-            </v-container>
-        </div>
+        <v-row>
+            <v-col v-for="(item, i) in listaReformada.allVwSimpleIlimitados?listaReformada.allVwSimpleIlimitados.nodes:[]" :key="i" cols="12" sm="12" md="4" lg="2">
+                <v-hover>
+                    <template v-slot:default="{ hover }">
+                        <v-card v-if="item.estadoSolicitado == 'S'" align="justify" color="purple accent-2" dark :elevation="hover ? 24 : 6" class="mx-auto pa-3">
+                            <v-card-title class="text-h5">
+                                <b><v-icon>mdi-notebook-edit-outline</v-icon><small>Tramite:</small> {{item.id}}</b><br/>
+                            </v-card-title>
+                            <v-card-subtitle class="text-h6">
+                                <b>Fecha: </b>{{$moment(item.creado).format('DD/MM/YYYY HH:mm')}}
+                            </v-card-subtitle>
+                            <v-card-text>
+                                Su solicitud esta en proceso, nos contactaremos con usted una ves que analicemos sus documentos.
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn  class="text-h5" text color="orange lighten-2">
+                                    SOLICITADO PENDIENTE
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </template>
+                </v-hover>
+                <v-hover>
+                    <template v-slot:default="{ hover }">
+                        <v-card v-if="item.estadoSolicitado == 'P'" align="justify" color="lime accent-2" :elevation="hover ? 24 : 6" class="mx-auto pa-3">
+                            <v-card-title class="text-h5">
+                                <b><v-icon>mdi-notebook-edit-outline</v-icon><small>Tramite:</small> {{item.id}}</b><br/>
+                            </v-card-title>
+                            <v-card-subtitle class="text-h6">
+                                <b>Fecha: </b>{{$moment(item.creado).format('DD/MM/YYYY HH:mm')}}
+                            </v-card-subtitle>
+                            <v-card-text>
+                                {{item.mensaje}}
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn  class="text-h5" text color="orange lighten-2">
+                                    PROGRAMADO
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </template>
+                </v-hover>
+                <v-hover>
+                    <template v-slot:default="{ hover }">
+                        <v-card v-if="item.estadoSolicitado == 'R'"  align="justify" color="red darken-1" :elevation="hover ? 24 : 6" class="mx-auto pa-3">
+                            <v-card-title class="text-h5">
+                                <b><v-icon>mdi-notebook-edit-outline</v-icon><small>Tramite:</small> {{item.id}}</b><br/>
+                            </v-card-title>
+                            <v-card-subtitle class="text-h6">
+                                <b>Fecha: </b>{{$moment(item.creado).format('DD/MM/YYYY HH:mm')}}
+                            </v-card-subtitle>
+                            <v-card-text>
+                                {{item.mensaje}}
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn  class="text-h5" text color="orange lighten-2">
+                                    <b>RECHAZADO</b>
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </template>
+                </v-hover>
+                <v-hover>
+                    <template v-slot:default="{ hover }">
+                        <v-card v-if="item.estadoSolicitado == 'A'" align="justify" color="green darken-3" dark :elevation="hover ? 24 : 6" class="mx-auto pa-3">
+                            <v-card-title class="text-h5">
+                                <b><v-icon>mdi-notebook-edit-outline</v-icon><small>Tramite:</small> {{item.id}}</b><br/>
+                            </v-card-title>
+                            <v-card-subtitle class="text-h6">
+                                <b>Fecha: </b>{{$moment(item.creado).format('DD/MM/YYYY HH:mm')}}
+                            </v-card-subtitle>
+                            <v-card-text>
+                                Solicitud fue aprobada para el plan <b>{{item.plan}}</b>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn  class="text-h5" text color="orange lighten-2">
+                                    APROBADO
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </template>
+                </v-hover>
+            </v-col>
+        </v-row>
+        <br/>
     </div>
 </template>
 <script>
@@ -82,6 +125,7 @@ export default {
             const q = {query: `{allVwSimpleIlimitados(condition:{ correo:"${user.data.miUsuario.mail}"}) {
                                     nodes {
                                         id
+                                        plan
                                         correo
                                         nombres
                                         mensaje
@@ -97,6 +141,8 @@ export default {
                                         multicentro
                                         ciudadAtencion
                                         horaPropuesta
+                                        estadoSolicitado
+                                        creado
                                     }}}`};
             this.$store.commit('reformarLista/lista', q)
         }

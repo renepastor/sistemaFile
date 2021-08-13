@@ -12,17 +12,22 @@ INSERT INTO base.rol (id_aplicacion, codigo, nombre) VALUES (fsis('FILES'), 'SUP
 INSERT INTO base.rol (id_aplicacion, codigo, nombre) VALUES (fsis('FILES'), 'ADMIN', 'Administrador');
 INSERT INTO base.rol (id_aplicacion, codigo, nombre) VALUES (fsis('FILES'), 'ASIG-HORA', 'Asigna Hora y Fecha');
 INSERT INTO base.rol (id_aplicacion, codigo, nombre) VALUES (fsis('FILES'), 'VAL-FILE', 'Verificar Archivos');
+INSERT INTO base.rol (id_aplicacion, codigo, nombre) VALUES (fsis('FILES'), 'SOL-SER', 'Solicitante de Servicios');
 
 -- MODULOS
 INSERT INTO base.modulo (id_aplicacion,  posicion, nombre, icono) VALUES (fsis('FILES'), 1, 'Administración', 'mdi-movie-open-play');
 INSERT INTO base.modulo (id_aplicacion,  posicion, nombre, icono) VALUES (fsis('FILES'), 2, 'Configuración', 'mdi-table-cog');
 INSERT INTO base.modulo (id_aplicacion,  posicion, nombre, icono) VALUES (fsis('FILES'), 3, 'Reportes', 'mdi-chart-line');
+INSERT INTO base.modulo (id_aplicacion,  posicion, nombre, icono) VALUES (fsis('FILES'), 4, 'Reportes', 'mdi-chart-line');
+INSERT INTO base.modulo (id_aplicacion,  posicion, nombre, icono) VALUES (fsis('FILES'), 5, 'Perfil', 'mdi-card-account-details');
 
 -- RECURSOS
 --INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Configuración','ARGOS'), 6, 'Parametros', 'parametro', true, 'mdi-cogs');
 
 INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Administración','FILES'), 1, 'Asignar Hora', 'asignarHora', true, 'mdi-folder-plus-outline');
 INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Administración','FILES'), 2, 'Verificar Documentos', 'verificaDoc', true, 'mdi-folder-multiple-plus-outline');
+INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Administración','FILES'), 3, 'Solicitudes', 'solicitudes', true, 'mdi-folder-multiple-plus-outline');
+INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Administración','FILES'), 4, 'Perfil de Usuario', 'perfil', true, 'mdi-card-account-details');
 
 INSERT INTO base.recurso (id_modulo, posicion, titulo, uri, es_menu, icono) VALUES (fmodulo('Reportes','FILES'), 1, 'Documentos', 'documentos', true, 'mdi-chart-box-outline');
 
@@ -37,6 +42,9 @@ INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacio
 
 INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (frol('VAL-FILE'), frecurso('Verificar Documentos'), true, true, true, true);
 INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (frol('VAL-FILE'), frecurso('Documentos'), true, true, true, true);
+
+INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (frol('SOL-SER'), frecurso('Solicitudes'), true, true, true, true);
+INSERT INTO base.rol_recurso (id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (frol('SOL-SER'), frecurso('Perfil de Usuario'), true, true, true, true);
 
 
 --INSERT INTO base.rol_recurso (id, id_rol, id_recurso, lectura, creacion, modificacion, eliminacion) VALUES (nextval('base.seq_rol_recurso'), frol('SUPER'), frecurso(''), true, true, true, true);
@@ -148,6 +156,14 @@ INSERT INTO base.tbl_tipos(padre_id,codigo,valor,descripcion,ayuda,creador) VALU
 (ftptbl('PLAN-SIM-ILI'),'PLNA-','5','Simple 500','',1),
 (ftptbl('PLAN-SIM-ILI'),'PLNA-','100','Simple 750','',1);
 
+
+INSERT INTO base.tbl_tipos(padre_id,codigo,valor,descripcion,ayuda,creador) VALUES
+(ftptbl('--'),'TP-ATN-SOC','TP ATN SOC','TIPO DE ATENCION SOCIAL','',1);
+INSERT INTO base.tbl_tipos(padre_id,codigo,valor,descripcion,ayuda,creador) VALUES
+(ftptbl('TP-ATN-SOC'),'TP-ATN-SOC-1','1','ADULTO MAYOR','',1),
+(ftptbl('TP-ATN-SOC'),'TP-ATN-SOC-2','2','DISCAPACITADO','',1),
+(ftptbl('TP-ATN-SOC'),'TP-ATN-SOC-3','3','EMBARAZADA','',1),
+(ftptbl('TP-ATN-SOC'),'TP-ATN-SOC-4','4','NINGUNO','',1);
 
 
 -------******PROCESO******--
