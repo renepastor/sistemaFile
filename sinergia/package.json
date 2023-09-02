@@ -28,7 +28,7 @@
     "postgraphile": "^4.12.3",
     "postgraphile-plugin-upload-field": "^1.0.0-alpha.10",
     "vee-validate": "^3.4.11",
-    "vuetify": "^2.5.5"
+    "vuetify": "^2.7.1"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.12.1"
